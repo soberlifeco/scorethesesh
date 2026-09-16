@@ -231,14 +231,22 @@ export default function LeaderboardPage() {
                               ))}
                             </div>
 
-                            <a
-                              href={entry.instagram}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-[#39FF14] text-xs sm:text-sm font-bold underline underline-offset-4 hover:brightness-110 transition-all duration-200 self-start"
-                            >
-                              Watch on Instagram →
-                            </a>
+                            <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                              <a
+                                href={entry.instagram}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-[#39FF14] text-xs sm:text-sm font-bold underline underline-offset-4 hover:brightness-110 transition-all duration-200"
+                              >
+                                Watch on Instagram →
+                              </a>
+                              <Link
+                                href="/your-turn-to-score"
+                                className="text-[#39FF14] text-xs sm:text-sm font-bold underline underline-offset-4 hover:brightness-110 transition-all duration-200"
+                              >
+                                You score it, click here →
+                              </Link>
+                            </div>
                           </div>
                         )}
                       </div>
