@@ -306,18 +306,23 @@ function ScoreCard({ entry, isOpen, onToggle, account }: { entry: Sesh; isOpen: 
                   <label className="text-white/50 text-[10px] uppercase tracking-wide">
                     {label}
                   </label>
-                  <input
-                    type="number"
-                    min={0}
-                    max={5}
-                    step={1}
-                    value={draft[key]}
+                  <select
+                    value={draft[key] || ""}
                     onChange={(e) => {
-                      const v = Math.max(0, Math.min(5, Number(e.target.value) || 0));
+                      const v = Math.max(1, Math.min(5, Number(e.target.value) || 1));
                       setDraft((d) => ({ ...d, [key]: v }));
                     }}
-                    className="bg-black/30 border border-white/10 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-[#39FF14]/70 transition-colors duration-200"
-                  />
+                    className="bg-black/30 border border-white/10 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-[#39FF14]/70 transition-colors duration-200 appearance-none"
+                  >
+                    <option value="" disabled>
+                      –
+                    </option>
+                    {[1, 2, 3, 4, 5].map((n) => (
+                      <option key={n} value={n}>
+                        {n}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               ))}
             </div>
