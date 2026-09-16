@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import type { Session } from "@supabase/supabase-js";
 import { getSupabaseBrowserClient } from "@/lib/supabase-browser";
 import { ORDERED_CHUNKS, CHUNK_SIZE, categoryLabels, isOldEra, maxScoreForSesh, type Sesh } from "@/lib/sesh-data";
+import { displayUsername } from "@/lib/format";
 
 type Account = { userId: string; email: string; username: string; accessToken: string };
 
@@ -99,6 +100,11 @@ function AuthForm({ onLoggedIn }: { onLoggedIn: (account: Account) => void }) {
       if (trimmedUsername.length < 2 || trimmedUsername.length > 24) {
         setStatus("error");
         setError("Username needs to be 2–24 characters.");
+        return;
+      }
+      if (trimmedUsername.includes("@")) {
+        setStatus("error");
+        setError("Username can't be an email address — pick something else.");
         return;
       }
       const { data, error: signUpError } = await supabase.auth.signUp({
@@ -425,7 +431,7 @@ function ScoreCard({ entry, isOpen, onToggle, account }: { entry: Sesh; isOpen: 
                     <div key={idx} className="bg-black/30 rounded-lg px-3 py-2">
                       <div className="flex items-center justify-between gap-2">
                         <span className="text-white text-xs sm:text-sm font-medium">
-                          @{e.username}
+                          @{displayUsername(e.username)}
                         </span>
                         <span className="text-white/70 text-xs tabular-nums">
                           {e.total}/{maxScore}
@@ -536,7 +542,7 @@ function YourTurnToScorePageContent() {
           <div className="max-w-2xl w-full mt-6 flex items-center justify-between gap-3 bg-white/5 border border-white/10 rounded-full px-5 py-2.5">
             <span className="text-white/70 text-xs sm:text-sm">
               Scoring as{" "}
-              <span className="text-[#39FF14] font-bold">@{account.username}</span>
+              <span className="text-[#39FF14] font-bold">@{displayUsername(account.username)}</span>
             </span>
             <button
               type="button"

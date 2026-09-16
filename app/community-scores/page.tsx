@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getSupabaseServerClient } from "@/lib/supabase";
 import { categoryLabels, maxScoreForSesh, totalOfScores } from "@/lib/sesh-data";
+import { displayUsername } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
 
@@ -109,7 +110,7 @@ export default async function CommunityScoresPage() {
                       style={{ fontFamily: "var(--font-space-grotesk)" }}
                       className="text-white font-bold text-sm sm:text-base truncate"
                     >
-                      {row.username}
+                      {displayUsername(row.username)}
                     </span>
                     <span className="text-white/50 text-xs sm:text-sm shrink-0">
                       scored Sesh {row.sesh}
