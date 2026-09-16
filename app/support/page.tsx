@@ -23,7 +23,6 @@ export default function SupportPage() {
       </h1>
 
       <div className="flex flex-col gap-3 max-w-md text-white/70 text-sm sm:text-base leading-relaxed">
-        <p>Help me pour everything into this.</p>
         <p>
           You are all amazing and you can donate whatever you like to this
           venture.
