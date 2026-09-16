@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseServerClient, getVerifiedUser } from "@/lib/supabase";
-import { isOldEra } from "@/lib/sesh-data";
+import { isOldEra, totalOfScores } from "@/lib/sesh-data";
 import { isRateLimited, clientIp } from "@/lib/rate-limit";
 
 type ScoreRow = {
@@ -15,10 +15,6 @@ type ScoreRow = {
   notes: string | null;
   updated_at: string;
 };
-
-function rowTotal(row: { music: number; substances: number; cat3: number; hangover: number | null; cat5: number }) {
-  return row.music + row.substances + row.cat3 + (row.hangover ?? 0) + row.cat5;
-}
 
 export async function GET(req: NextRequest) {
   if (isRateLimited(`scores-get:${clientIp(req)}`, 60, 60_000)) {
@@ -54,7 +50,7 @@ export async function GET(req: NextRequest) {
     cat3: row.cat3,
     hangover: row.hangover,
     cat5: row.cat5,
-    total: rowTotal(row),
+    total: totalOfScores(row),
     notes: row.notes,
     updatedAt: row.updated_at,
   }));
@@ -150,5 +146,5 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Couldn't save your score. Try again." }, { status: 500 });
   }
 
-  return NextResponse.json({ ...data, total: rowTotal(data) });
+  return NextResponse.json({ ...data, total: totalOfScores(data) });
 }

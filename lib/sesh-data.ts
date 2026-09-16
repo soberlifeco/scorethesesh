@@ -106,3 +106,14 @@ export function categoryBreakdown(entry: Sesh): { label: string; value: number }
 export function maxScoreForSesh(sesh: number): number {
   return isOldEra(sesh) ? 20 : 25;
 }
+
+/** Sums a community score row's category values (hangover is null in the old era, counted as 0). */
+export function totalOfScores(row: {
+  music: number;
+  substances: number;
+  cat3: number;
+  hangover: number | null;
+  cat5: number;
+}): number {
+  return row.music + row.substances + row.cat3 + (row.hangover ?? 0) + row.cat5;
+}

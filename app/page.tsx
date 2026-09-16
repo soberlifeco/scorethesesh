@@ -80,6 +80,34 @@ export default function HomePage() {
           See the Scoring Science →
         </Link>
 
+        {/* Links to the rest of the site */}
+        <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
+          <Link
+            href="/leaderboard"
+            className="text-white/60 text-xs sm:text-sm underline underline-offset-4 hover:text-white transition-colors duration-200"
+          >
+            Sesh Leaderboard
+          </Link>
+          <Link
+            href="/your-turn-to-score"
+            className="text-white/60 text-xs sm:text-sm underline underline-offset-4 hover:text-white transition-colors duration-200"
+          >
+            Your Turn To Score
+          </Link>
+          <Link
+            href="/community-scores"
+            className="text-white/60 text-xs sm:text-sm underline underline-offset-4 hover:text-white transition-colors duration-200"
+          >
+            Community Scores
+          </Link>
+          <Link
+            href="/support"
+            className="text-white/60 text-xs sm:text-sm underline underline-offset-4 hover:text-white transition-colors duration-200"
+          >
+            Support Score The Sesh
+          </Link>
+        </div>
+
         {/* Email capture */}
         <form
           onSubmit={handleSubmit}
