@@ -45,7 +45,10 @@ export default function HomePage() {
     >
       <div className="flex-1 flex flex-col items-center justify-center gap-5 sm:gap-6 max-w-md w-full text-center">
         {/* Eyebrow */}
-        <p className="text-[#39FF14] text-lg sm:text-xl font-extrabold tracking-[0.15em] uppercase">
+        <p
+          style={{ fontFamily: "var(--font-space-grotesk)" }}
+          className="text-[#39FF14] text-5xl sm:text-7xl font-black tracking-[0.05em] uppercase leading-none"
+        >
           Score The Sesh
         </p>
 
