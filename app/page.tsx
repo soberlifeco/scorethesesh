@@ -45,19 +45,19 @@ export default function HomePage() {
     >
       <div className="flex-1 flex flex-col items-center justify-center gap-5 sm:gap-6 max-w-md w-full text-center">
         {/* Photo */}
-        <div className="relative w-[160px] h-[160px] sm:w-[220px] sm:h-[220px] shrink-0 rounded-3xl overflow-hidden border-2 border-[#39FF14]/70 shadow-[0_0_25px_rgba(57,255,20,0.35),0_0_55px_rgba(57,255,20,0.18)]">
+        <div className="relative w-[220px] h-[220px] sm:w-[300px] sm:h-[300px] shrink-0 rounded-3xl overflow-hidden border-2 border-[#39FF14]/70 shadow-[0_0_25px_rgba(57,255,20,0.35),0_0_55px_rgba(57,255,20,0.18)]">
           <Image
             src="/tom-whiteboard.jpg"
             alt="Tom scoring a sesh on the whiteboard — Score The Sesh"
             fill
-            sizes="(min-width: 640px) 220px, 160px"
+            sizes="(min-width: 640px) 300px, 220px"
             className="object-cover"
             priority
           />
         </div>
 
         {/* Eyebrow */}
-        <p className="text-[#39FF14] text-xs sm:text-sm font-medium tracking-[0.2em] uppercase">
+        <p className="text-[#39FF14] text-lg sm:text-xl font-extrabold tracking-[0.15em] uppercase">
           Score The Sesh
         </p>
 
