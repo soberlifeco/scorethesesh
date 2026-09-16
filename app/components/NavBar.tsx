@@ -8,6 +8,7 @@ const LINKS = [
   { label: "Scoring Science", href: "/scoring-science" },
   { label: "Sesh Leaderboard", href: "/leaderboard" },
   { label: "Your Turn To Score", href: "/your-turn-to-score" },
+  { label: "Support Score The Sesh", href: "/support" },
 ];
 
 export default function NavBar() {
