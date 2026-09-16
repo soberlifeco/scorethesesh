@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const INSTAGRAM_URL = "https://www.instagram.com/soberlifetom";
 
@@ -69,6 +70,15 @@ export default function HomePage() {
             New episode every single day
           </p>
         </div>
+
+        {/* Scoring Science link */}
+        <Link
+          href="/scoring-science"
+          style={{ fontFamily: "var(--font-space-grotesk)" }}
+          className="text-[#39FF14] text-sm sm:text-base font-bold underline underline-offset-4 hover:brightness-110 transition-all duration-200"
+        >
+          See the Scoring Science →
+        </Link>
 
         {/* Email capture */}
         <form
