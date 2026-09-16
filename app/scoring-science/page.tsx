@@ -13,7 +13,7 @@ const CATEGORIES = [
   },
   {
     name: "Substances",
-    direction: "Crazier / more substances = higher score",
+    direction: "More/heavy substances = higher score",
     copy: "Not every sesh NEEDS substances, but most of them have some form of drink or drug involved. Unless you're like me — boring, three years sober, and running on a few Lucky Saints, a vape and some chewing gum. The crazier — or the more — of the substances, the higher the score.",
   },
   {
@@ -68,14 +68,14 @@ export default function ScoringSciencePage() {
             key={category.name}
             className="text-left bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6"
           >
-            <div className="flex items-baseline justify-between gap-3 mb-2">
+            <div className="flex flex-col gap-1 mb-2">
               <h2
                 style={{ fontFamily: "var(--font-space-grotesk)" }}
                 className="text-white font-bold text-xl sm:text-2xl"
               >
                 {category.name}
               </h2>
-              <span className="text-[#39FF14] text-[11px] sm:text-xs font-medium uppercase tracking-wide shrink-0">
+              <span className="text-[#39FF14] text-[11px] sm:text-xs font-medium uppercase tracking-wide">
                 {category.direction}
               </span>
             </div>
