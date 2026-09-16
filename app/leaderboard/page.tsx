@@ -104,7 +104,7 @@ export default function LeaderboardPage() {
         </h1>
 
         <p className="text-white/70 text-sm sm:text-base leading-relaxed">
-          All 45 seshes, sorted highest score to lowest. Tap any sesh to see
+          Every sesh, sorted highest score to lowest. Tap any sesh to see
           the category breakdown.
         </p>
       </div>
