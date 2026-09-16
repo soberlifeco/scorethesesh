@@ -4,6 +4,9 @@ import { useState } from "react";
 import Link from "next/link";
 import { CHUNKS, CHUNK_SIZE, categoryBreakdown, type Sesh } from "@/lib/sesh-data";
 
+// One emoji per 10-sesh rank band: 1–10, 11–20, 21–30, 31–40, 41–45.
+const RANGE_EMOJI = ["👑", "🐟", "🤠", "❌", "☠️"];
+
 export default function LeaderboardPage() {
   const [openSesh, setOpenSesh] = useState<number | null>(null);
   const [openChunk, setOpenChunk] = useState<number>(0);
@@ -52,6 +55,7 @@ export default function LeaderboardPage() {
           const rangeStart = chunkIndex * CHUNK_SIZE + 1;
           const rangeEnd = rangeStart + chunk.length - 1;
           const isChunkOpen = openChunk === chunkIndex;
+          const chunkEmoji = RANGE_EMOJI[chunkIndex] ?? "";
 
           return (
             <div
@@ -68,7 +72,7 @@ export default function LeaderboardPage() {
                   style={{ fontFamily: "var(--font-space-grotesk)" }}
                   className="text-white font-bold text-sm sm:text-base"
                 >
-                  Rank {rangeStart}–{rangeEnd}
+                  {chunkEmoji} Rank {rangeStart}–{rangeEnd}
                 </span>
                 <span
                   className={`text-[#39FF14] text-xs transition-transform duration-200 ${
