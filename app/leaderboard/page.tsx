@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { CHUNKS, CHUNK_SIZE, categoryBreakdown, type Sesh } from "@/lib/sesh-data";
+import InstagramEmbed from "@/app/components/InstagramEmbed";
 
 // One emoji per 10-sesh rank band: 1–10, 11–20, 21–30, 31–40, 41–45.
 const RANGE_EMOJI = ["👑", "🐟", "🤠", "❌", "☠️"];
@@ -150,15 +151,9 @@ export default function LeaderboardPage() {
                               ))}
                             </div>
 
+                            <InstagramEmbed url={entry.instagram} />
+
                             <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-                              <a
-                                href={entry.instagram}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-[#39FF14] text-xs sm:text-sm font-bold underline underline-offset-4 hover:brightness-110 transition-all duration-200"
-                              >
-                                Watch on Instagram →
-                              </a>
                               <Link
                                 href={`/your-turn-to-score?sesh=${entry.sesh}`}
                                 className="text-[#39FF14] text-xs sm:text-sm font-bold underline underline-offset-4 hover:brightness-110 transition-all duration-200"

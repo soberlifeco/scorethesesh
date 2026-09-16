@@ -7,6 +7,7 @@ import type { Session } from "@supabase/supabase-js";
 import { getSupabaseBrowserClient } from "@/lib/supabase-browser";
 import { ORDERED_CHUNKS, CHUNK_SIZE, categoryLabels, isOldEra, maxScoreForSesh, type Sesh } from "@/lib/sesh-data";
 import { displayUsername } from "@/lib/format";
+import InstagramEmbed from "@/app/components/InstagramEmbed";
 
 type Account = { userId: string; email: string; username: string; accessToken: string };
 
@@ -341,14 +342,7 @@ function ScoreCard({ entry, isOpen, onToggle, account }: { entry: Sesh; isOpen: 
 
       {isOpen && (
         <div className="px-4 pb-4 pt-1 flex flex-col gap-4">
-          <a
-            href={entry.instagram}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[#39FF14] text-xs sm:text-sm font-bold underline underline-offset-4 hover:brightness-110 transition-all duration-200 self-start"
-          >
-            Watch on Instagram →
-          </a>
+          <InstagramEmbed url={entry.instagram} />
 
           {/* Your score inputs */}
           <div className="flex flex-col gap-2">
