@@ -52,8 +52,35 @@ function AuthForm({ onLoggedIn }: { onLoggedIn: (account: Account) => void }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
-  const [status, setStatus] = useState<"idle" | "loading" | "error" | "check-email">("idle");
+  const [status, setStatus] = useState<"idle" | "loading" | "error" | "check-email" | "reset-sent">("idle");
   const [error, setError] = useState("");
+
+  async function handleForgotPassword() {
+    const supabase = getSupabaseBrowserClient();
+    if (!supabase) {
+      setStatus("error");
+      setError("Accounts aren't configured yet.");
+      return;
+    }
+    if (!email.trim()) {
+      setStatus("error");
+      setError("Enter your email above first, then tap forgot password.");
+      return;
+    }
+
+    setStatus("loading");
+    setError("");
+
+    const { error: resetError } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+      redirectTo: `${window.location.origin}/reset-password`,
+    });
+    if (resetError) {
+      setStatus("error");
+      setError(resetError.message);
+      return;
+    }
+    setStatus("reset-sent");
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -109,6 +136,17 @@ function AuthForm({ onLoggedIn }: { onLoggedIn: (account: Account) => void }) {
         <p className="text-white text-sm sm:text-base font-medium">Check your email</p>
         <p className="text-white/60 text-xs sm:text-sm">
           We sent a confirmation link to {email}. Click it, then come back and log in.
+        </p>
+      </div>
+    );
+  }
+
+  if (status === "reset-sent") {
+    return (
+      <div className="max-w-sm w-full flex flex-col items-center gap-3 mt-8 bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6 text-center">
+        <p className="text-white text-sm sm:text-base font-medium">Check your email</p>
+        <p className="text-white/60 text-xs sm:text-sm">
+          We sent a password reset link to {email}. Click it to set a new password.
         </p>
       </div>
     );
@@ -170,6 +208,17 @@ function AuthForm({ onLoggedIn }: { onLoggedIn: (account: Account) => void }) {
         placeholder="Password (6+ characters)"
         className="w-full bg-white/5 border border-white/15 rounded-full px-5 py-3 text-white text-sm placeholder:text-white/30 outline-none focus:border-[#39FF14]/70 transition-colors duration-200"
       />
+
+      {mode === "login" && (
+        <button
+          type="button"
+          onClick={handleForgotPassword}
+          disabled={status === "loading"}
+          className="self-end -mt-1 text-white/40 text-xs underline underline-offset-4 hover:text-white transition-colors duration-200 disabled:opacity-60"
+        >
+          Forgot password?
+        </button>
+      )}
 
       <button
         type="submit"
