@@ -2,11 +2,11 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import type { Session } from "@supabase/supabase-js";
+import { getSupabaseBrowserClient } from "@/lib/supabase-browser";
 import { ORDERED_CHUNKS, CHUNK_SIZE, categoryLabels, isOldEra, maxScoreForSesh, type Sesh } from "@/lib/sesh-data";
 
-type Account = { userId: string; email: string; username: string };
-
-const STORAGE_KEY = "sts_community_account";
+type Account = { userId: string; email: string; username: string; accessToken: string };
 
 type Draft = {
   music: number;
@@ -32,31 +32,85 @@ type CommunityData = {
   mine: Omit<Draft, "notes"> & { notes: string | null } | null;
 };
 
-function LoginForm({ onLoggedIn }: { onLoggedIn: (account: Account) => void }) {
+function sessionToAccount(session: Session | null): Account | null {
+  if (!session?.user) return null;
+  const username =
+    typeof session.user.user_metadata?.username === "string"
+      ? session.user.user_metadata.username
+      : session.user.email?.split("@")[0] || "sesh-scorer";
+  return {
+    userId: session.user.id,
+    email: session.user.email || "",
+    username,
+    accessToken: session.access_token,
+  };
+}
+
+function AuthForm({ onLoggedIn }: { onLoggedIn: (account: Account) => void }) {
+  const [mode, setMode] = useState<"signup" | "login">("signup");
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
-  const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "loading" | "error" | "check-email">("idle");
   const [error, setError] = useState("");
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    const supabase = getSupabaseBrowserClient();
+    if (!supabase) {
+      setStatus("error");
+      setError("Accounts aren't configured yet.");
+      return;
+    }
+
     setStatus("loading");
     setError("");
-    try {
-      const res = await fetch("/api/community/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, username }),
+
+    if (mode === "signup") {
+      const trimmedUsername = username.trim();
+      if (trimmedUsername.length < 2 || trimmedUsername.length > 24) {
+        setStatus("error");
+        setError("Username needs to be 2–24 characters.");
+        return;
+      }
+      const { data, error: signUpError } = await supabase.auth.signUp({
+        email,
+        password,
+        options: { data: { username: trimmedUsername } },
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Something went wrong.");
-      const account: Account = { userId: data.userId, email: data.email, username: data.username };
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(account));
-      onLoggedIn(account);
-    } catch (err) {
-      setStatus("error");
-      setError(err instanceof Error ? err.message : "Something went wrong.");
+      if (signUpError) {
+        setStatus("error");
+        setError(signUpError.message);
+        return;
+      }
+      if (!data.session) {
+        // Email confirmation is required before they can log in.
+        setStatus("check-email");
+        return;
+      }
+      const account = sessionToAccount(data.session);
+      if (account) onLoggedIn(account);
+    } else {
+      const { data, error: signInError } = await supabase.auth.signInWithPassword({ email, password });
+      if (signInError) {
+        setStatus("error");
+        setError(signInError.message);
+        return;
+      }
+      const account = sessionToAccount(data.session);
+      if (account) onLoggedIn(account);
     }
+  }
+
+  if (status === "check-email") {
+    return (
+      <div className="max-w-sm w-full flex flex-col items-center gap-3 mt-8 bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6 text-center">
+        <p className="text-white text-sm sm:text-base font-medium">Check your email</p>
+        <p className="text-white/60 text-xs sm:text-sm">
+          We sent a confirmation link to {email}. Click it, then come back and log in.
+        </p>
+      </div>
+    );
   }
 
   return (
@@ -64,9 +118,26 @@ function LoginForm({ onLoggedIn }: { onLoggedIn: (account: Account) => void }) {
       onSubmit={handleSubmit}
       className="max-w-sm w-full flex flex-col items-center gap-3 mt-8 bg-white/5 border border-white/10 rounded-2xl p-5 sm:p-6"
     >
-      <p className="text-white text-sm sm:text-base font-medium text-center">
-        No password needed — just an email and a username to score with.
-      </p>
+      <div className="flex w-full bg-black/30 rounded-full p-1">
+        <button
+          type="button"
+          onClick={() => setMode("signup")}
+          className={`flex-1 rounded-full py-2 text-xs sm:text-sm font-bold transition-colors duration-200 ${
+            mode === "signup" ? "bg-[#39FF14] text-black" : "text-white/60"
+          }`}
+        >
+          Sign Up
+        </button>
+        <button
+          type="button"
+          onClick={() => setMode("login")}
+          className={`flex-1 rounded-full py-2 text-xs sm:text-sm font-bold transition-colors duration-200 ${
+            mode === "login" ? "bg-[#39FF14] text-black" : "text-white/60"
+          }`}
+        >
+          Log In
+        </button>
+      </div>
 
       <input
         type="email"
@@ -76,13 +147,26 @@ function LoginForm({ onLoggedIn }: { onLoggedIn: (account: Account) => void }) {
         placeholder="you@email.com"
         className="w-full bg-white/5 border border-white/15 rounded-full px-5 py-3 text-white text-sm placeholder:text-white/30 outline-none focus:border-[#39FF14]/70 transition-colors duration-200"
       />
+
+      {mode === "signup" && (
+        <input
+          type="text"
+          required
+          maxLength={24}
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          placeholder="Pick a username"
+          className="w-full bg-white/5 border border-white/15 rounded-full px-5 py-3 text-white text-sm placeholder:text-white/30 outline-none focus:border-[#39FF14]/70 transition-colors duration-200"
+        />
+      )}
+
       <input
-        type="text"
+        type="password"
         required
-        maxLength={24}
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        placeholder="Pick a username"
+        minLength={6}
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        placeholder="Password (6+ characters)"
         className="w-full bg-white/5 border border-white/15 rounded-full px-5 py-3 text-white text-sm placeholder:text-white/30 outline-none focus:border-[#39FF14]/70 transition-colors duration-200"
       />
 
@@ -92,14 +176,13 @@ function LoginForm({ onLoggedIn }: { onLoggedIn: (account: Account) => void }) {
         style={{ fontFamily: "var(--font-space-grotesk)" }}
         className="w-full bg-[#39FF14] text-black font-bold px-8 py-3 rounded-full text-sm hover:brightness-110 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed"
       >
-        {status === "loading" ? "Logging in..." : "Start Scoring"}
+        {status === "loading" ? "..." : mode === "signup" ? "Create Account" : "Log In"}
       </button>
 
       {status === "error" && <p className="text-red-400 text-xs sm:text-sm">{error}</p>}
 
       <p className="text-white/30 text-xs text-center">
-        Using the same email brings your scores back next time. Everyone can
-        see your scores and notes — keep it sesh-appropriate.
+        Everyone can see your scores and notes — keep it sesh-appropriate.
       </p>
     </form>
   );
@@ -120,7 +203,9 @@ function ScoreCard({ entry, isOpen, onToggle, account }: { entry: Sesh; isOpen: 
   useEffect(() => {
     if (!isOpen || community || loadingCommunity) return;
     queueMicrotask(() => setLoadingCommunity(true));
-    fetch(`/api/community/scores?sesh=${entry.sesh}&userId=${encodeURIComponent(account.userId)}`)
+    fetch(`/api/community/scores?sesh=${entry.sesh}`, {
+      headers: { Authorization: `Bearer ${account.accessToken}` },
+    })
       .then(async (res) => {
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || "Couldn't load community scores.");
@@ -150,9 +235,11 @@ function ScoreCard({ entry, isOpen, onToggle, account }: { entry: Sesh; isOpen: 
     try {
       const res = await fetch("/api/community/scores", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${account.accessToken}`,
+        },
         body: JSON.stringify({
-          userId: account.userId,
           sesh: entry.sesh,
           music: draft.music,
           substances: draft.substances,
@@ -165,8 +252,10 @@ function ScoreCard({ entry, isOpen, onToggle, account }: { entry: Sesh; isOpen: 
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Couldn't save your score.");
       setSaveStatus("saved");
-      setCommunity(null); // force a refresh next time / re-fetch below
-      fetch(`/api/community/scores?sesh=${entry.sesh}&userId=${encodeURIComponent(account.userId)}`)
+      setCommunity(null);
+      fetch(`/api/community/scores?sesh=${entry.sesh}`, {
+        headers: { Authorization: `Bearer ${account.accessToken}` },
+      })
         .then((res2) => res2.json())
         .then((data2: CommunityData) => setCommunity(data2));
     } catch (err) {
@@ -304,26 +393,34 @@ function ScoreCard({ entry, isOpen, onToggle, account }: { entry: Sesh; isOpen: 
 
 export default function YourTurnToScorePage() {
   const [account, setAccount] = useState<Account | null>(null);
-  const [checkedStorage, setCheckedStorage] = useState(false);
+  const [checkedSession, setCheckedSession] = useState(false);
   const [openChunk, setOpenChunk] = useState<number>(0);
   const [openSesh, setOpenSesh] = useState<number | null>(null);
 
   useEffect(() => {
-    let loaded: Account | null = null;
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) loaded = JSON.parse(raw);
-    } catch {
-      // ignore
+    const supabase = getSupabaseBrowserClient();
+    if (!supabase) {
+      queueMicrotask(() => setCheckedSession(true));
+      return;
     }
-    queueMicrotask(() => {
-      if (loaded) setAccount(loaded);
-      setCheckedStorage(true);
+
+    supabase.auth.getSession().then(({ data }) => {
+      queueMicrotask(() => {
+        setAccount(sessionToAccount(data.session));
+        setCheckedSession(true);
+      });
     });
+
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+      setAccount(sessionToAccount(session));
+    });
+
+    return () => listener.subscription.unsubscribe();
   }, []);
 
-  function handleLogout() {
-    localStorage.removeItem(STORAGE_KEY);
+  async function handleLogout() {
+    const supabase = getSupabaseBrowserClient();
+    if (supabase) await supabase.auth.signOut();
     setAccount(null);
   }
 
@@ -350,7 +447,7 @@ export default function YourTurnToScorePage() {
         </p>
       </div>
 
-      {checkedStorage && !account && <LoginForm onLoggedIn={setAccount} />}
+      {checkedSession && !account && <AuthForm onLoggedIn={setAccount} />}
 
       {account && (
         <>

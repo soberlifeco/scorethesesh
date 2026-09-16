@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getSupabaseServerClient } from "@/lib/supabase";
+import { getSupabaseServerClient, getVerifiedUser } from "@/lib/supabase";
 import { isOldEra } from "@/lib/sesh-data";
 import { isRateLimited, clientIp } from "@/lib/rate-limit";
 
 type ScoreRow = {
   user_id: string;
+  username: string;
   sesh: number;
   music: number;
   substances: number;
@@ -13,17 +14,10 @@ type ScoreRow = {
   cat5: number;
   notes: string | null;
   updated_at: string;
-  community_users: { username: string } | { username: string }[] | null;
 };
 
 function rowTotal(row: { music: number; substances: number; cat3: number; hangover: number | null; cat5: number }) {
   return row.music + row.substances + row.cat3 + (row.hangover ?? 0) + row.cat5;
-}
-
-function usernameOf(row: ScoreRow): string {
-  const u = row.community_users;
-  if (!u) return "anon";
-  return Array.isArray(u) ? u[0]?.username ?? "anon" : u.username;
 }
 
 export async function GET(req: NextRequest) {
@@ -43,7 +37,7 @@ export async function GET(req: NextRequest) {
 
   const { data, error } = await supabase
     .from("community_scores")
-    .select("user_id, sesh, music, substances, cat3, hangover, cat5, notes, updated_at, community_users(username)")
+    .select("user_id, username, sesh, music, substances, cat3, hangover, cat5, notes, updated_at")
     .eq("sesh", sesh)
     .order("updated_at", { ascending: false });
 
@@ -52,9 +46,9 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Couldn't load community scores." }, { status: 500 });
   }
 
-  const rows = (data ?? []) as unknown as ScoreRow[];
+  const rows = (data ?? []) as ScoreRow[];
   const entries = rows.map((row) => ({
-    username: usernameOf(row),
+    username: row.username,
     music: row.music,
     substances: row.substances,
     cat3: row.cat3,
@@ -70,8 +64,10 @@ export async function GET(req: NextRequest) {
       ? Math.round((entries.reduce((sum, e) => sum + e.total, 0) / entries.length) * 10) / 10
       : null;
 
-  const userId = req.nextUrl.searchParams.get("userId");
-  const mineRow = userId ? rows.find((row) => row.user_id === userId) : undefined;
+  // If the request carries a valid session, also return that user's own row
+  // (even though it's already public, this saves the client a second lookup).
+  const verified = await getVerifiedUser(req, supabase);
+  const mineRow = verified ? rows.find((row) => row.user_id === verified.id) : undefined;
   const mine = mineRow
     ? {
         music: mineRow.music,
@@ -96,14 +92,15 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Community scoring isn't configured yet." }, { status: 500 });
   }
 
+  const verified = await getVerifiedUser(req, supabase);
+  if (!verified) {
+    return NextResponse.json({ error: "You need to log in first." }, { status: 401 });
+  }
+
   const body = await req.json().catch(() => null);
-  const userId = typeof body?.userId === "string" ? body.userId : "";
   const sesh = Number(body?.sesh);
   const notes = typeof body?.notes === "string" ? body.notes.trim().slice(0, 500) : "";
 
-  if (!userId) {
-    return NextResponse.json({ error: "You need to log in first." }, { status: 401 });
-  }
   if (!Number.isInteger(sesh) || sesh < 1 || sesh > 45) {
     return NextResponse.json({ error: "Invalid sesh number." }, { status: 400 });
   }
@@ -132,7 +129,8 @@ export async function POST(req: NextRequest) {
     .from("community_scores")
     .upsert(
       {
-        user_id: userId,
+        user_id: verified.id,
+        username: verified.username,
         sesh,
         music: scores.music,
         substances: scores.substances,
