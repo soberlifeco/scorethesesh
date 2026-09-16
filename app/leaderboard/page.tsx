@@ -65,6 +65,12 @@ const SESH_DATA: Sesh[] = [
 
 const RANKED = [...SESH_DATA].sort((a, b) => b.total - a.total || a.sesh - b.sesh);
 
+const CHUNK_SIZE = 10;
+const CHUNKS: Sesh[][] = [];
+for (let i = 0; i < RANKED.length; i += CHUNK_SIZE) {
+  CHUNKS.push(RANKED.slice(i, i + CHUNK_SIZE));
+}
+
 function categoryBreakdown(entry: Sesh): { label: string; value: number }[] {
   if (entry.hangover === null) {
     return [
@@ -85,6 +91,7 @@ function categoryBreakdown(entry: Sesh): { label: string; value: number }[] {
 
 export default function LeaderboardPage() {
   const [openSesh, setOpenSesh] = useState<number | null>(null);
+  const [openChunk, setOpenChunk] = useState<number>(0);
 
   return (
     <div
@@ -110,7 +117,7 @@ export default function LeaderboardPage() {
       </div>
 
       {/* Old scoring system note */}
-      <div className="max-w-md w-full mt-6 bg-[#39FF14]/5 border border-[#39FF14]/30 rounded-2xl p-4 sm:p-5 text-left">
+      <div className="max-w-2xl w-full mt-6 bg-[#39FF14]/5 border border-[#39FF14]/30 rounded-2xl p-4 sm:p-5 text-left">
         <p className="text-[#39FF14] text-[11px] sm:text-xs font-bold uppercase tracking-wide mb-2">
           Before you judge the numbers
         </p>
@@ -124,81 +131,119 @@ export default function LeaderboardPage() {
         </p>
       </div>
 
-      {/* Leaderboard list */}
-      <div className="flex flex-col gap-2 max-w-md w-full mt-8">
-        {RANKED.map((entry, i) => {
-          const rank = i + 1;
-          const isTop = rank === 1;
-          const isOpen = openSesh === entry.sesh;
+      {/* Leaderboard, grouped 10 at a time */}
+      <div className="flex flex-col gap-3 max-w-2xl w-full mt-8">
+        {CHUNKS.map((chunk, chunkIndex) => {
+          const rangeStart = chunkIndex * CHUNK_SIZE + 1;
+          const rangeEnd = rangeStart + chunk.length - 1;
+          const isChunkOpen = openChunk === chunkIndex;
+
           return (
             <div
-              key={entry.sesh}
-              className={`rounded-xl border overflow-hidden ${
-                isTop
-                  ? "bg-[#39FF14]/10 border-[#39FF14]/50"
-                  : "bg-white/5 border-white/10"
-              }`}
+              key={chunkIndex}
+              className="rounded-xl border border-white/10 bg-white/5 overflow-hidden"
             >
               <button
                 type="button"
-                onClick={() => setOpenSesh(isOpen ? null : entry.sesh)}
-                aria-expanded={isOpen}
+                onClick={() => setOpenChunk(isChunkOpen ? -1 : chunkIndex)}
+                aria-expanded={isChunkOpen}
                 className="w-full flex items-center justify-between gap-3 px-4 py-3 text-left"
               >
-                <div className="flex items-center gap-3 min-w-0">
-                  <span
-                    style={{ fontFamily: "var(--font-space-grotesk)" }}
-                    className={`text-sm font-bold w-7 shrink-0 text-center ${
-                      isTop ? "text-[#39FF14]" : "text-white/50"
-                    }`}
-                  >
-                    {rank}
-                  </span>
-                  <span className="text-white font-medium text-sm sm:text-base truncate">
-                    Sesh {entry.sesh}
-                  </span>
-                </div>
-
-                <div className="flex items-center gap-3 shrink-0">
-                  <span className="text-white/70 text-xs sm:text-sm tabular-nums">
-                    {entry.total}/{entry.maxScore}
-                  </span>
-                  <span
-                    className={`text-white/40 text-xs transition-transform duration-200 ${
-                      isOpen ? "rotate-180" : ""
-                    }`}
-                  >
-                    ▼
-                  </span>
-                </div>
+                <span
+                  style={{ fontFamily: "var(--font-space-grotesk)" }}
+                  className="text-white font-bold text-sm sm:text-base"
+                >
+                  Rank {rangeStart}–{rangeEnd}
+                </span>
+                <span
+                  className={`text-[#39FF14] text-xs transition-transform duration-200 ${
+                    isChunkOpen ? "rotate-180" : ""
+                  }`}
+                >
+                  ▼
+                </span>
               </button>
 
-              {isOpen && (
-                <div className="px-4 pb-4 pt-1 flex flex-col gap-3">
-                  <div className="grid grid-cols-2 gap-2">
-                    {categoryBreakdown(entry).map((cat) => (
+              {isChunkOpen && (
+                <div className="px-3 pb-3 grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  {chunk.map((entry, indexInChunk) => {
+                    const rank = rangeStart + indexInChunk;
+                    const isTop = rank === 1;
+                    const isOpen = openSesh === entry.sesh;
+                    return (
                       <div
-                        key={cat.label}
-                        className="bg-black/30 rounded-lg px-3 py-2 flex flex-col gap-0.5"
+                        key={entry.sesh}
+                        className={`rounded-xl border overflow-hidden ${
+                          isTop
+                            ? "bg-[#39FF14]/10 border-[#39FF14]/50"
+                            : "bg-black/20 border-white/10"
+                        }`}
                       >
-                        <span className="text-white/50 text-[10px] sm:text-[11px] uppercase tracking-wide">
-                          {cat.label}
-                        </span>
-                        <span className="text-white text-sm font-bold tabular-nums">
-                          {cat.value}/5
-                        </span>
-                      </div>
-                    ))}
-                  </div>
+                        <button
+                          type="button"
+                          onClick={() => setOpenSesh(isOpen ? null : entry.sesh)}
+                          aria-expanded={isOpen}
+                          className="w-full flex items-center justify-between gap-3 px-4 py-3 text-left"
+                        >
+                          <div className="flex items-center gap-3 min-w-0">
+                            <span
+                              style={{ fontFamily: "var(--font-space-grotesk)" }}
+                              className={`text-sm font-bold w-7 shrink-0 text-center ${
+                                isTop ? "text-[#39FF14]" : "text-white/50"
+                              }`}
+                            >
+                              {rank}
+                            </span>
+                            <span className="text-white font-medium text-sm sm:text-base truncate">
+                              Sesh {entry.sesh}
+                            </span>
+                          </div>
 
-                  <a
-                    href={entry.instagram}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[#39FF14] text-xs sm:text-sm font-bold underline underline-offset-4 hover:brightness-110 transition-all duration-200 self-start"
-                  >
-                    Watch on Instagram →
-                  </a>
+                          <div className="flex items-center gap-3 shrink-0">
+                            <span className="text-white/70 text-xs sm:text-sm tabular-nums">
+                              {entry.total}/{entry.maxScore}
+                            </span>
+                            <span
+                              className={`text-white/40 text-xs transition-transform duration-200 ${
+                                isOpen ? "rotate-180" : ""
+                              }`}
+                            >
+                              ▼
+                            </span>
+                          </div>
+                        </button>
+
+                        {isOpen && (
+                          <div className="px-4 pb-4 pt-1 flex flex-col gap-3">
+                            <div className="grid grid-cols-2 gap-2">
+                              {categoryBreakdown(entry).map((cat) => (
+                                <div
+                                  key={cat.label}
+                                  className="bg-black/30 rounded-lg px-3 py-2 flex flex-col gap-0.5"
+                                >
+                                  <span className="text-white/50 text-[10px] sm:text-[11px] uppercase tracking-wide">
+                                    {cat.label}
+                                  </span>
+                                  <span className="text-white text-sm font-bold tabular-nums">
+                                    {cat.value}/5
+                                  </span>
+                                </div>
+                              ))}
+                            </div>
+
+                            <a
+                              href={entry.instagram}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-[#39FF14] text-xs sm:text-sm font-bold underline underline-offset-4 hover:brightness-110 transition-all duration-200 self-start"
+                            >
+                              Watch on Instagram →
+                            </a>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               )}
             </div>
