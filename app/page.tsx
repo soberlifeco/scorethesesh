@@ -76,8 +76,9 @@ export default function HomePage() {
           className="w-full flex flex-col items-center gap-3 mt-2"
         >
           <p className="text-white text-sm sm:text-base font-medium">
-            Get on the list — <span className="text-[#39FF14]">early access</span> to
-            everything Score The Sesh
+            Become a scorer with me,{" "}
+            <span className="text-[#39FF14]">early access</span> to everything
+            Score The Sesh: leaderboards, exclusive sessions and more
           </p>
 
           <div className="w-full flex flex-col sm:flex-row gap-2">
