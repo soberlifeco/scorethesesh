@@ -64,10 +64,10 @@ export default function HomePage() {
         {/* Heading */}
         <h1
           style={{ fontFamily: "var(--font-space-grotesk)" }}
-          className="text-white font-bold text-3xl sm:text-4xl leading-tight"
+          className="text-white font-bold text-2xl sm:text-3xl leading-tight"
         >
-          The daily sesh review that comes from over a decade of sesh
-          experience
+          10+ years on the sesh, 3 years off the sesh. Created for current
+          sesh heads, ex sesh heads and anyone in the middle.
         </h1>
 
         {/* Body copy */}
@@ -76,8 +76,7 @@ export default function HomePage() {
             Parties, raves, afters, festivals and everything in between...
           </p>
           <p className="text-white/70 text-sm sm:text-base leading-relaxed">
-            Scored on 5 categories: Music, Substances, Smell, Hangover,
-            Vibes
+            Scored on 5 categories: Music, Substances, Smell, Hangover, Vibes
           </p>
           <p className="text-white/70 text-sm sm:text-base leading-relaxed">
             New episode every single day
