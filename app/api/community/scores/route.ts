@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseServerClient } from "@/lib/supabase";
 import { isOldEra } from "@/lib/sesh-data";
+import { isRateLimited, clientIp } from "@/lib/rate-limit";
 
 type ScoreRow = {
   user_id: string;
@@ -26,6 +27,10 @@ function usernameOf(row: ScoreRow): string {
 }
 
 export async function GET(req: NextRequest) {
+  if (isRateLimited(`scores-get:${clientIp(req)}`, 60, 60_000)) {
+    return NextResponse.json({ error: "Slow down a bit and try again." }, { status: 429 });
+  }
+
   const supabase = getSupabaseServerClient();
   if (!supabase) {
     return NextResponse.json({ error: "Community scoring isn't configured yet." }, { status: 500 });
@@ -82,6 +87,10 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
+  if (isRateLimited(`scores-post:${clientIp(req)}`, 30, 60_000)) {
+    return NextResponse.json({ error: "Too many saves — wait a minute and try again." }, { status: 429 });
+  }
+
   const supabase = getSupabaseServerClient();
   if (!supabase) {
     return NextResponse.json({ error: "Community scoring isn't configured yet." }, { status: 500 });

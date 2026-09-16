@@ -111,6 +111,7 @@ function ScoreCard({ entry, isOpen, onToggle, account }: { entry: Sesh; isOpen: 
   const [draft, setDraft] = useState<Draft>(EMPTY_DRAFT);
   const [saveStatus, setSaveStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
   const [saveError, setSaveError] = useState("");
+  const [communityError, setCommunityError] = useState("");
 
   const oldEra = isOldEra(entry.sesh);
   const labels = categoryLabels(entry.sesh);
@@ -120,8 +121,12 @@ function ScoreCard({ entry, isOpen, onToggle, account }: { entry: Sesh; isOpen: 
     if (!isOpen || community || loadingCommunity) return;
     queueMicrotask(() => setLoadingCommunity(true));
     fetch(`/api/community/scores?sesh=${entry.sesh}&userId=${encodeURIComponent(account.userId)}`)
-      .then((res) => res.json())
-      .then((data: CommunityData) => {
+      .then(async (res) => {
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Couldn't load community scores.");
+        return data as CommunityData;
+      })
+      .then((data) => {
         setCommunity(data);
         if (data.mine) {
           setDraft({
@@ -134,7 +139,7 @@ function ScoreCard({ entry, isOpen, onToggle, account }: { entry: Sesh; isOpen: 
           });
         }
       })
-      .catch(() => setSaveError("Couldn't load community scores."))
+      .catch((err) => setCommunityError(err instanceof Error ? err.message : "Couldn't load community scores."))
       .finally(() => setLoadingCommunity(false));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
@@ -256,6 +261,9 @@ function ScoreCard({ entry, isOpen, onToggle, account }: { entry: Sesh; isOpen: 
               Community
             </p>
             {loadingCommunity && <p className="text-white/40 text-xs">Loading...</p>}
+            {!loadingCommunity && communityError && (
+              <p className="text-red-400 text-xs">{communityError}</p>
+            )}
             {!loadingCommunity && community && community.count === 0 && (
               <p className="text-white/40 text-xs">Be the first to score this one.</p>
             )}

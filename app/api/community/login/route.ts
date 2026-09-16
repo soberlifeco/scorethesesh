@@ -1,9 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseServerClient } from "@/lib/supabase";
+import { isRateLimited, clientIp } from "@/lib/rate-limit";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export async function POST(req: NextRequest) {
+  if (isRateLimited(`login:${clientIp(req)}`, 10, 60_000)) {
+    return NextResponse.json(
+      { error: "Too many attempts — wait a minute and try again." },
+      { status: 429 }
+    );
+  }
+
   const supabase = getSupabaseServerClient();
   if (!supabase) {
     return NextResponse.json(
