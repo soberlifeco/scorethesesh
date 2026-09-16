@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const INSTAGRAM_URL = "https://www.instagram.com/soberlifetom";
 
@@ -43,6 +44,18 @@ export default function HomePage() {
       style={{ fontFamily: "var(--font-inter)" }}
     >
       <div className="flex-1 flex flex-col items-center justify-center gap-5 sm:gap-6 max-w-md w-full text-center">
+        {/* Photo */}
+        <div className="relative w-[160px] h-[160px] sm:w-[220px] sm:h-[220px] shrink-0 rounded-3xl overflow-hidden border-2 border-[#39FF14]/70 shadow-[0_0_25px_rgba(57,255,20,0.35),0_0_55px_rgba(57,255,20,0.18)]">
+          <Image
+            src="/tom-whiteboard.jpg"
+            alt="Tom scoring a sesh on the whiteboard — Score The Sesh"
+            fill
+            sizes="(min-width: 640px) 220px, 160px"
+            className="object-cover"
+            priority
+          />
+        </div>
+
         {/* Eyebrow */}
         <p className="text-[#39FF14] text-xs sm:text-sm font-medium tracking-[0.2em] uppercase">
           Score The Sesh
@@ -53,14 +66,23 @@ export default function HomePage() {
           style={{ fontFamily: "var(--font-space-grotesk)" }}
           className="text-white font-bold text-3xl sm:text-4xl leading-tight"
         >
-          The daily sesh review that doesn&apos;t sugarcoat it
+          The daily sesh review that comes from over a decade of sesh
+          experience
         </h1>
 
         {/* Body copy */}
-        <p className="text-white/70 text-sm sm:text-base leading-relaxed">
-          Drinking sessions, raves, afterparties and festivals — scored on Music,
-          Substances, Location &amp; Characters out of 5. New episode every day.
-        </p>
+        <div className="flex flex-col gap-2">
+          <p className="text-white/70 text-sm sm:text-base leading-relaxed">
+            Parties, raves, afters, festivals and everything in between...
+          </p>
+          <p className="text-white/70 text-sm sm:text-base leading-relaxed">
+            Scored on 5 categories: Music, Substances, Smell, Hangover/Comedown,
+            Vibes
+          </p>
+          <p className="text-white/70 text-sm sm:text-base leading-relaxed">
+            New episode every single day
+          </p>
+        </div>
 
         {/* Email capture */}
         <form
