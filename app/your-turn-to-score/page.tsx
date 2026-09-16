@@ -23,7 +23,8 @@ export default function YourTurnToScorePage() {
       </h1>
 
       <p className="text-white/70 text-sm sm:text-base leading-relaxed max-w-sm">
-        Send in your worst one and get it scored. Details dropping soon.
+        Score past sesh&apos;s, add notes and compare them with others, the
+        wackier the better.
       </p>
 
       <Link
