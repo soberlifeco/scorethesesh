@@ -160,7 +160,7 @@ export default function LeaderboardPage() {
                                 Watch on Instagram →
                               </a>
                               <Link
-                                href="/your-turn-to-score"
+                                href={`/your-turn-to-score?sesh=${entry.sesh}`}
                                 className="text-[#39FF14] text-xs sm:text-sm font-bold underline underline-offset-4 hover:brightness-110 transition-all duration-200"
                               >
                                 You score it, click here →

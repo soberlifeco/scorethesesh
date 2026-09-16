@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import type { Session } from "@supabase/supabase-js";
 import { getSupabaseBrowserClient } from "@/lib/supabase-browser";
 import { ORDERED_CHUNKS, CHUNK_SIZE, categoryLabels, isOldEra, maxScoreForSesh, type Sesh } from "@/lib/sesh-data";
@@ -268,7 +269,7 @@ function ScoreCard({ entry, isOpen, onToggle, account }: { entry: Sesh; isOpen: 
     draft.music + draft.substances + draft.cat3 + (oldEra ? 0 : draft.hangover) + draft.cat5;
 
   return (
-    <div className="rounded-xl border border-white/10 bg-black/20 overflow-hidden">
+    <div id={`sesh-${entry.sesh}`} className="rounded-xl border border-white/10 bg-black/20 overflow-hidden scroll-mt-6">
       <button
         type="button"
         onClick={onToggle}
@@ -391,11 +392,38 @@ function ScoreCard({ entry, isOpen, onToggle, account }: { entry: Sesh; isOpen: 
   );
 }
 
-export default function YourTurnToScorePage() {
+function YourTurnToScorePageContent() {
+  const searchParams = useSearchParams();
+  const targetSesh = Number(searchParams.get("sesh"));
+  const hasTarget = Number.isInteger(targetSesh) && targetSesh >= 1 && targetSesh <= 45;
+
   const [account, setAccount] = useState<Account | null>(null);
   const [checkedSession, setCheckedSession] = useState(false);
-  const [openChunk, setOpenChunk] = useState<number>(0);
-  const [openSesh, setOpenSesh] = useState<number | null>(null);
+  const [openChunk, setOpenChunk] = useState<number>(hasTarget ? Math.floor((targetSesh - 1) / CHUNK_SIZE) : 0);
+  const [openSesh, setOpenSesh] = useState<number | null>(hasTarget ? targetSesh : null);
+  const [scrolledToTarget, setScrolledToTarget] = useState(false);
+
+  // If they land here already logged in (or log in/sign up) with a
+  // ?sesh=N link, jump straight to that sesh's card.
+  useEffect(() => {
+    if (!account || !hasTarget) return;
+    const chunkIndex = Math.floor((targetSesh - 1) / CHUNK_SIZE);
+    queueMicrotask(() => {
+      setOpenChunk(chunkIndex);
+      setOpenSesh(targetSesh);
+    });
+  }, [account, hasTarget, targetSesh]);
+
+  // Once that card is actually open in the DOM, scroll it into view.
+  useEffect(() => {
+    if (scrolledToTarget || !hasTarget || openSesh !== targetSesh) return;
+    const el = document.getElementById(`sesh-${targetSesh}`);
+    if (!el) return;
+    requestAnimationFrame(() => {
+      el.scrollIntoView({ behavior: "smooth", block: "center" });
+      setScrolledToTarget(true);
+    });
+  }, [openSesh, hasTarget, targetSesh, scrolledToTarget]);
 
   useEffect(() => {
     const supabase = getSupabaseBrowserClient();
@@ -524,5 +552,13 @@ export default function YourTurnToScorePage() {
         Back to scorethesesh.com
       </Link>
     </div>
+  );
+}
+
+export default function YourTurnToScorePage() {
+  return (
+    <Suspense fallback={null}>
+      <YourTurnToScorePageContent />
+    </Suspense>
   );
 }
