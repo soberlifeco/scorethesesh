@@ -36,7 +36,7 @@ const CATEGORIES = [
 export default function ScoringSciencePage() {
   return (
     <div
-      className="min-h-dvh flex flex-col items-center px-6 py-12 sm:py-16"
+      className="min-h-[calc(100dvh-56px)] flex flex-col items-center px-6 py-12 sm:py-16"
       style={{ fontFamily: "var(--font-inter)" }}
     >
       <div className="flex flex-col items-center gap-5 sm:gap-6 max-w-md w-full text-center">

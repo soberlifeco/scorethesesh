@@ -40,7 +40,7 @@ export default function HomePage() {
 
   return (
     <div
-      className="min-h-dvh flex flex-col items-center px-6 py-6"
+      className="min-h-[calc(100dvh-56px)] flex flex-col items-center px-6 py-6"
       style={{ fontFamily: "var(--font-inter)" }}
     >
       <div className="flex-1 flex flex-col items-center justify-center gap-5 sm:gap-6 max-w-md w-full text-center">
