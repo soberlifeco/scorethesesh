@@ -26,14 +26,21 @@ export default function ThankYouPage() {
         Keep an eye on your inbox — that&apos;s where the good stuff lands first.
       </p>
 
+      <Link
+        href="/scoring-science"
+        style={{ fontFamily: "var(--font-space-grotesk)" }}
+        className="inline-block bg-[#39FF14] text-black font-bold px-8 py-3.5 rounded-full text-sm sm:text-base hover:brightness-110 transition-all duration-200"
+      >
+        See the Scoring Science
+      </Link>
+
       <a
         href="https://www.instagram.com/soberlifetom"
         target="_blank"
         rel="noopener noreferrer"
-        style={{ fontFamily: "var(--font-space-grotesk)" }}
-        className="inline-block bg-[#39FF14] text-black font-bold px-8 py-3.5 rounded-full text-sm sm:text-base hover:brightness-110 transition-all duration-200"
+        className="text-white/70 text-xs sm:text-sm underline underline-offset-4 hover:text-white transition-colors duration-200"
       >
-        Follow @soberlifetom
+        Follow @soberlifetom on Instagram
       </a>
 
       <Link
