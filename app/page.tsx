@@ -1,43 +1,8 @@
-"use client";
-
-import { useState } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 const INSTAGRAM_URL = "https://www.instagram.com/soberlifetom";
 
 export default function HomePage() {
-  const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
-  const [errorMessage, setErrorMessage] = useState("");
-
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setStatus("loading");
-    setErrorMessage("");
-
-    try {
-      const res = await fetch("/api/subscribe", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
-
-      if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
-        throw new Error(data.error || "Something went wrong. Try again.");
-      }
-
-      router.push("/thank-you");
-    } catch (err) {
-      setStatus("error");
-      setErrorMessage(
-        err instanceof Error ? err.message : "Something went wrong. Try again."
-      );
-    }
-  }
-
   return (
     <div
       className="min-h-[calc(100dvh-56px)] flex flex-col items-center px-6 py-6"
@@ -57,8 +22,8 @@ export default function HomePage() {
           style={{ fontFamily: "var(--font-space-grotesk)" }}
           className="text-white font-bold text-2xl sm:text-3xl leading-tight"
         >
-          10+ years on the sesh, 3 years off the sesh. Created for current
-          sesh heads, ex sesh heads and anyone in the middle.
+          The series no one asked for, uniting ex sesh heads, current sesh
+          heads and the people that are in the middle
         </h1>
 
         {/* Body copy */}
@@ -111,42 +76,17 @@ export default function HomePage() {
           </Link>
         </div>
 
-        {/* Email capture */}
-        <form
-          onSubmit={handleSubmit}
-          className="w-full flex flex-col items-center gap-3 mt-2"
-        >
-          <p className="text-white text-sm sm:text-base font-medium">
-            Become a scorer with me,{" "}
-            <span className="text-[#39FF14]">early access</span> to everything
-            Score The Sesh: leaderboards, exclusive sessions and more
-          </p>
-
-          <div className="w-full flex flex-col sm:flex-row gap-2">
-            <input
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@email.com"
-              className="flex-1 bg-white/5 border border-white/15 rounded-full px-5 py-3 text-white text-sm sm:text-base placeholder:text-white/30 outline-none focus:border-[#39FF14]/70 transition-colors duration-200"
-            />
-            <button
-              type="submit"
-              disabled={status === "loading"}
-              style={{ fontFamily: "var(--font-space-grotesk)" }}
-              className="bg-[#39FF14] text-black font-bold px-8 py-3 rounded-full text-sm sm:text-base hover:brightness-110 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed"
-            >
-              {status === "loading" ? "Sending..." : "Join the List"}
-            </button>
-          </div>
-
-          {status === "error" && (
-            <p className="text-red-400 text-xs sm:text-sm">{errorMessage}</p>
-          )}
-
-          <p className="text-white/30 text-xs">No spam. Unsubscribe anytime.</p>
-        </form>
+        {/* Donate CTA */}
+        <div className="w-full flex flex-col items-center gap-3 mt-2">
+          <Link
+            href="/support"
+            style={{ fontFamily: "var(--font-space-grotesk)" }}
+            className="bg-[#39FF14] text-black font-bold px-8 py-3 rounded-full text-sm sm:text-base text-center hover:brightness-110 transition-all duration-200"
+          >
+            Click here to donate to Score The Sesh, so I can keep doing this
+            for YOU
+          </Link>
+        </div>
 
         {/* Secondary link */}
         <a
