@@ -15,10 +15,29 @@ const inter = Inter({
   weight: ["400", "500"],
 });
 
+const SITE_URL = "https://scorethesesh.com";
+const DESCRIPTION =
+  "Score The Sesh — parties, raves, afters and festivals, scored on Music, Substances, Smell, Hangover and Vibes. New episode every single day.";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: "Score The Sesh",
-  description:
-    "Score The Sesh is a daily party review series — drinking sessions, raves, afterparties and festivals scored on Music, Substances, Location & Characters. Get the free 7 Day Rise Guide.",
+  description: DESCRIPTION,
+  openGraph: {
+    title: "Score The Sesh",
+    description: DESCRIPTION,
+    url: SITE_URL,
+    siteName: "Score The Sesh",
+    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
+    locale: "en_GB",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Score The Sesh",
+    description: DESCRIPTION,
+    images: ["/og-image.png"],
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
