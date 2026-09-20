@@ -18,13 +18,13 @@ const CATEGORIES = [
   },
   {
     name: "Smell",
-    direction: "Worse smell = lower score",
-    copy: "A tough one to judge, but it matters — we've all been to a smelly party and it ain't nice. So, the worse the smell, the lower the score. Why don't they have iPhones that let you smell through the screen yet?",
+    direction: "Worse smell = higher score",
+    copy: "Smell, weird one. Might change.",
   },
   {
     name: "Hangover",
-    direction: "Worse hangover = lower score",
-    copy: "So many of these over the years — I'm collating hangover and \"comedown\" as one for ease of scoring. Same rule as smell: the worse the hangover, the lower the score.",
+    direction: "Worse hangover = higher score",
+    copy: "If you're waking up hungover or coming down hard, it usually means you went too far / had an amazing night. Worst the next day feels, higher the score.",
   },
   {
     name: "Vibes",
