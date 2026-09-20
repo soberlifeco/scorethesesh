@@ -24,7 +24,7 @@ const CATEGORIES = [
   {
     name: "Hangover",
     direction: "Worse hangover = higher score",
-    copy: "If you're waking up hungover or coming down hard, it usually means you went too far / had an amazing night. Worst the next day feels, higher the score.",
+    copy: "If you're waking up hungover or coming down hard, it usually means you went too far / had an amazing night. Worse the next day feels, higher the score.",
   },
   {
     name: "Vibes",
