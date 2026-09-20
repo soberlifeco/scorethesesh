@@ -22,8 +22,8 @@ export default function HomePage() {
           style={{ fontFamily: "var(--font-space-grotesk)" }}
           className="text-white font-bold text-2xl sm:text-3xl leading-tight"
         >
-          The series no one asked for, uniting ex sesh heads, current sesh
-          heads and the people that are in the middle
+          Uniting ex sesh heads, current sesh heads and the people that are
+          in the middle
         </h1>
 
         {/* Body copy */}
