@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 const INSTAGRAM_URL = "https://www.instagram.com/soberlifetom";
+const DONATE_URL = "https://donate.stripe.com/00wfZ9bCP9QrcSb0YM7EQ06";
 
 export default function HomePage() {
   return (
@@ -68,24 +69,28 @@ export default function HomePage() {
           >
             Community Scores
           </Link>
-          <Link
-            href="/support"
+          <a
+            href={DONATE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="text-white/60 text-xs sm:text-sm underline underline-offset-4 hover:text-white transition-colors duration-200"
           >
             Support Score The Sesh
-          </Link>
+          </a>
         </div>
 
         {/* Donate CTA */}
         <div className="w-full flex flex-col items-center gap-3 mt-2">
-          <Link
-            href="/support"
+          <a
+            href={DONATE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             style={{ fontFamily: "var(--font-space-grotesk)" }}
             className="bg-[#39FF14] text-black font-bold px-8 py-3 rounded-full text-sm sm:text-base text-center hover:brightness-110 transition-all duration-200"
           >
             Click here to donate to Score The Sesh, so I can keep doing this
             for YOU
-          </Link>
+          </a>
         </div>
 
         {/* Secondary link */}
