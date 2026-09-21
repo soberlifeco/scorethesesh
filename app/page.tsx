@@ -124,6 +124,13 @@ export default function HomePage() {
           >
             Click here to Support Score The Sesh
           </a>
+          <Link
+            href="/coaching"
+            style={{ fontFamily: "var(--font-space-grotesk)" }}
+            className="border border-[#39FF14] text-[#39FF14] font-bold px-8 py-3 rounded-full text-sm sm:text-base text-center hover:bg-[#39FF14] hover:text-black transition-all duration-200"
+          >
+            Work with Tom 1:1
+          </Link>
         </div>
 
         {/* Secondary link */}
