@@ -102,10 +102,7 @@ export default function CoachingPage() {
           style={{ fontFamily: "var(--font-space-grotesk)" }}
           className="text-white font-bold text-4xl sm:text-5xl"
         >
-          £325
-        </span>
-        <span className="text-white/50 text-xs sm:text-sm uppercase tracking-wide">
-          Per month
+          £324.99
         </span>
 
         <a
