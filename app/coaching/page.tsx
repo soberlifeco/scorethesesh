@@ -18,6 +18,7 @@ const STATS = [
 
 const INCLUDES = [
   "1 hour session per week at a selected time",
+  "Calls on whatever platform suits you — WhatsApp video, Zoom, FaceTime, Google Meet, etc.",
   "Unlimited 1:1 WhatsApp messaging between 8am–8pm",
   "Help guides for social situations",
   "Reviewing current habits",
