@@ -122,8 +122,7 @@ export default function HomePage() {
             style={{ fontFamily: "var(--font-space-grotesk)" }}
             className="bg-[#39FF14] text-black font-bold px-8 py-3 rounded-full text-sm sm:text-base text-center hover:brightness-110 transition-all duration-200"
           >
-            Click here to donate to Score The Sesh, so I can keep doing this
-            for YOU
+            Click here to Support Score The Sesh
           </a>
         </div>
 
