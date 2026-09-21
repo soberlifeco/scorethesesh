@@ -5,10 +5,7 @@ export const metadata: Metadata = {
   title: "1:1 Coaching — Score The Sesh",
 };
 
-// TODO: swap this for the real Stripe Payment Link once Tom sends it,
-// and change the button copy below from "DM To Book Your Spot" to
-// "Book Your Month".
-const BOOKING_URL = "https://www.instagram.com/soberlifetom";
+const BOOKING_URL = "https://buy.stripe.com/8x27sD5er1jV9FZgXK7EQ07";
 
 const STATS = [
   { value: "4", label: "Sessions" },
@@ -112,7 +109,7 @@ export default function CoachingPage() {
           style={{ fontFamily: "var(--font-space-grotesk)" }}
           className="mt-2 w-full text-center bg-[#39FF14] text-black font-bold px-8 py-3.5 rounded-full text-sm sm:text-base hover:brightness-110 transition-all duration-200"
         >
-          DM To Book Your Spot
+          Book Your Month
         </a>
 
         <Link
