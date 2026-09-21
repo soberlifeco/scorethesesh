@@ -9,6 +9,7 @@ const LINKS = [
   { label: "Sesh Leaderboard", href: "/leaderboard" },
   { label: "Your Turn To Score", href: "/your-turn-to-score" },
   { label: "Community Scores", href: "/community-scores" },
+  { label: "1:1 Coaching", href: "/coaching" },
   { label: "Support Score The Sesh", href: "https://donate.stripe.com/00wfZ9bCP9QrcSb0YM7EQ06", external: true },
 ];
 
