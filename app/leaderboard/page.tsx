@@ -4,8 +4,11 @@ import { useState } from "react";
 import Link from "next/link";
 import { CHUNKS, CHUNK_SIZE, categoryBreakdown, type Sesh } from "@/lib/sesh-data";
 
-// One emoji per 10-sesh rank band: 1–10, 11–20, 21–30, 31–40, 41–45.
+// One emoji per 10-sesh rank band: 1–10, 11–20, 21–30, 31–40, 41–50.
+// Anything ranked 51 or worse gets a gravestone instead.
 const RANGE_EMOJI = ["👑", "🐟", "🤠", "❌", "☠️"];
+const GRAVEYARD_EMOJI = "🪦";
+const GRAVEYARD_START_RANK = 51;
 
 export default function LeaderboardPage() {
   const [openSesh, setOpenSesh] = useState<number | null>(null);
@@ -55,7 +58,10 @@ export default function LeaderboardPage() {
           const rangeStart = chunkIndex * CHUNK_SIZE + 1;
           const rangeEnd = rangeStart + chunk.length - 1;
           const isChunkOpen = openChunk === chunkIndex;
-          const chunkEmoji = RANGE_EMOJI[chunkIndex] ?? "";
+          const chunkEmoji =
+            rangeStart >= GRAVEYARD_START_RANK
+              ? GRAVEYARD_EMOJI
+              : RANGE_EMOJI[chunkIndex] ?? "";
 
           return (
             <div
