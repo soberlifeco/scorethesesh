@@ -62,6 +62,8 @@ export const SESH_DATA: Sesh[] = [
   { sesh: 49, music: 5, substances: 4, cat3: 0, hangover: 1, cat5: 2, total: 12, maxScore: 25, instagram: "https://www.instagram.com/soberlifetom/reel/DdeaqeqtvBN/" },
   { sesh: 50, music: 5, substances: 2, cat3: 3, hangover: 4, cat5: 5, total: 19, maxScore: 25, instagram: "https://www.instagram.com/soberlifetom/reel/Ddg6R9YN0yj/" },
   { sesh: 51, music: 5, substances: 2, cat3: 2, hangover: 3, cat5: 5, total: 17, maxScore: 25, instagram: "https://www.instagram.com/soberlifetom/reel/DdjmQ9UNcPs/" },
+  { sesh: 52, music: 5, substances: 4, cat3: 0, hangover: 2, cat5: 4, total: 15, maxScore: 25, instagram: "https://www.instagram.com/reel/DdmJvq5N_ld/" },
+  { sesh: 53, music: 4, substances: 2, cat3: 2, hangover: 3, cat5: 4, total: 15, maxScore: 25, instagram: "https://www.instagram.com/reel/DdopPcAtBkL/" },
 ];
 
 export const RANKED = [...SESH_DATA].sort((a, b) => b.total - a.total || a.sesh - b.sesh);
