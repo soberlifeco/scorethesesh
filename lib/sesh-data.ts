@@ -96,9 +96,9 @@ export function categoryLabels(sesh: number): { key: "music" | "substances" | "c
   return [
     { key: "music", label: "Music" },
     { key: "substances", label: "Substances" },
-    { key: "cat3", label: "Smell" },
-    { key: "hangover", label: "Hangover" },
     { key: "cat5", label: "Vibes" },
+    { key: "hangover", label: "Hangover" },
+    { key: "cat3", label: "WTF" },
   ];
 }
 

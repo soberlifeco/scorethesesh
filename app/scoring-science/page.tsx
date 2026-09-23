@@ -17,9 +17,9 @@ const CATEGORIES = [
     copy: "Not every sesh NEEDS substances, but most of them have some form of drink or drug involved. Unless you're like me — boring, three years sober, and running on a few Lucky Saints, a vape and some chewing gum. The crazier — or the more — of the substances, the higher the score.",
   },
   {
-    name: "Smell",
-    direction: "Worse smell = higher score",
-    copy: "Smell, weird one. Might change.",
+    name: "Vibes",
+    direction: "Better vibes = higher score",
+    copy: "A wide spectrum category, this one. It gathers the impact of the people, the location, the atmosphere and anything else relevant. The higher the better.",
   },
   {
     name: "Hangover",
@@ -27,9 +27,9 @@ const CATEGORIES = [
     copy: "If you're waking up hungover or coming down hard, it usually means you went too far / had an amazing night. Worse the next day feels, higher the score.",
   },
   {
-    name: "Vibes",
-    direction: "Better vibes = higher score",
-    copy: "A wide spectrum category, this one. It gathers the impact of the people, the location, the atmosphere and anything else relevant. The higher the better.",
+    name: "WTF",
+    direction: "Crazier sesh = higher score",
+    copy: "Says it on the tin. The higher the rating, the crazier the sesh — things we don't usually see. The more we say what the fuck, the higher it goes.",
   },
 ];
 

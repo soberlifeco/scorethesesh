@@ -67,7 +67,7 @@ export default function HomePage() {
             Parties, raves, afters, festivals and everything in between...
           </p>
           <p className="text-white/70 text-sm sm:text-base leading-relaxed">
-            Scored on 5 categories: Music, Substances, Smell, Hangover, Vibes
+            Scored on 5 categories: Music, Substances, Vibes, Hangover, WTF
           </p>
           <p className="text-white/70 text-sm sm:text-base leading-relaxed">
             New episode every single day

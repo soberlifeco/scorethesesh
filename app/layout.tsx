@@ -17,7 +17,7 @@ const inter = Inter({
 
 const SITE_URL = "https://scorethesesh.com";
 const DESCRIPTION =
-  "Score The Sesh — parties, raves, afters and festivals, scored on Music, Substances, Smell, Hangover and Vibes. New episode every single day.";
+  "Score The Sesh — parties, raves, afters and festivals, scored on Music, Substances, Vibes, Hangover and WTF. New episode every single day.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
