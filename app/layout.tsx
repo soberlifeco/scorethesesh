@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Inter } from "next/font/google";
+import { Space_Grotesk, Inter, Permanent_Marker } from "next/font/google";
 import "./globals.css";
 import NavBar from "./components/NavBar";
 
@@ -13,6 +13,12 @@ const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
   weight: ["400", "500"],
+});
+
+const permanentMarker = Permanent_Marker({
+  variable: "--font-marker",
+  subsets: ["latin"],
+  weight: "400",
 });
 
 const SITE_URL = "https://scorethesesh.com";
@@ -44,7 +50,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${spaceGrotesk.variable} ${inter.variable} h-full antialiased`}
+      className={`${spaceGrotesk.variable} ${inter.variable} ${permanentMarker.variable} h-full antialiased`}
     >
       <body className="min-h-full bg-[#0A0A0A]">
         <NavBar />

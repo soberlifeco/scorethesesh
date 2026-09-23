@@ -10,46 +10,28 @@ export default function HomePage() {
       style={{ fontFamily: "var(--font-inter)" }}
     >
       <div className="flex-1 flex flex-col items-center justify-center gap-5 sm:gap-6 max-w-md w-full text-center">
-        {/* Eyebrow — scoreboard/LED display treatment */}
-        <div className="relative w-full max-w-lg">
-          {/* Ambient glow spilling behind the "screen" */}
-          <div
+        {/* Eyebrow — whiteboard marker treatment */}
+        <div className="relative w-full max-w-lg flex flex-col items-center">
+          <p
+            style={{ fontFamily: "var(--font-marker)" }}
+            className="relative z-10 text-white text-4xl sm:text-6xl leading-tight text-center -rotate-1"
+          >
+            Score The Sesh
+          </p>
+          <svg
             aria-hidden
-            className="pointer-events-none absolute inset-0 -z-10 blur-3xl opacity-40"
-            style={{ backgroundColor: "#39FF14" }}
-          />
-
-          <div className="relative overflow-hidden rounded-lg border border-[#39FF14]/25 bg-black px-5 py-5 sm:px-9 sm:py-7">
-            {/* Scanline texture */}
-            <div
-              aria-hidden
-              className="pointer-events-none absolute inset-0 opacity-70"
-              style={{
-                backgroundImage:
-                  "repeating-linear-gradient(to bottom, rgba(57,255,20,0.12) 0px, rgba(57,255,20,0.12) 1px, transparent 1px, transparent 3px)",
-              }}
+            viewBox="0 0 300 20"
+            preserveAspectRatio="none"
+            className="w-56 sm:w-80 h-4 sm:h-5 -mt-1 sm:-mt-2 -rotate-1"
+          >
+            <path
+              d="M4 11 Q 30 3, 60 10 T 120 8 Q 150 13, 180 7 T 240 11 Q 265 5, 296 9"
+              stroke="#39FF14"
+              strokeWidth="6"
+              strokeLinecap="round"
+              fill="none"
             />
-            {/* Faint vignette so the panel reads as a screen, not a flat box */}
-            <div
-              aria-hidden
-              className="pointer-events-none absolute inset-0"
-              style={{
-                boxShadow: "inset 0 0 40px 10px rgba(0,0,0,0.6)",
-              }}
-            />
-
-            <p
-              style={{
-                fontFamily: "var(--font-space-grotesk)",
-                letterSpacing: "-0.02em",
-                textShadow:
-                  "0 0 6px rgba(57,255,20,0.9), 0 0 18px rgba(57,255,20,0.7), 0 0 42px rgba(57,255,20,0.45)",
-              }}
-              className="relative z-10 text-[#39FF14] text-5xl sm:text-7xl font-black uppercase leading-none"
-            >
-              Score The Sesh
-            </p>
-          </div>
+          </svg>
         </div>
 
         {/* Heading */}
