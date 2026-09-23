@@ -10,28 +10,54 @@ export default function HomePage() {
       style={{ fontFamily: "var(--font-inter)" }}
     >
       <div className="flex-1 flex flex-col items-center justify-center gap-5 sm:gap-6 max-w-md w-full text-center">
-        {/* Eyebrow — whiteboard marker treatment */}
-        <div className="relative w-full max-w-lg flex flex-col items-center">
-          <p
-            style={{ fontFamily: "var(--font-marker)" }}
-            className="relative z-10 text-white text-4xl sm:text-6xl leading-tight text-center -rotate-1"
+        {/* Eyebrow — chalkboard treatment */}
+        <div className="relative w-full max-w-lg">
+          <div
+            className="relative overflow-hidden rounded-md border-[6px] px-6 py-7 sm:px-10 sm:py-9 flex flex-col items-center"
+            style={{
+              backgroundColor: "#1B2B22",
+              borderColor: "#6B4A30",
+              boxShadow: "inset 0 0 50px 12px rgba(0,0,0,0.5)",
+            }}
           >
-            Score The Sesh
-          </p>
-          <svg
-            aria-hidden
-            viewBox="0 0 300 20"
-            preserveAspectRatio="none"
-            className="w-56 sm:w-80 h-4 sm:h-5 -mt-1 sm:-mt-2 -rotate-1"
-          >
-            <path
-              d="M4 11 Q 30 3, 60 10 T 120 8 Q 150 13, 180 7 T 240 11 Q 265 5, 296 9"
-              stroke="#39FF14"
-              strokeWidth="6"
-              strokeLinecap="round"
-              fill="none"
+            {/* Chalk dust texture */}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0 opacity-[0.15]"
+              style={{
+                backgroundImage:
+                  "radial-gradient(rgba(255,255,255,0.8) 1px, transparent 1.5px)",
+                backgroundSize: "10px 10px",
+              }}
             />
-          </svg>
+
+            <p
+              style={{
+                fontFamily: "var(--font-chalk)",
+                textShadow:
+                  "0 0 1px rgba(255,255,255,0.5), 0 0 8px rgba(255,255,255,0.25)",
+              }}
+              className="relative z-10 text-white/90 text-3xl sm:text-5xl uppercase leading-tight text-center"
+            >
+              Score The Sesh
+            </p>
+
+            <svg
+              aria-hidden
+              viewBox="0 0 300 20"
+              preserveAspectRatio="none"
+              className="relative z-10 w-48 sm:w-64 h-4 sm:h-5 mt-2"
+            >
+              <path
+                d="M4 11 Q 30 3, 60 10 T 120 8 Q 150 13, 180 7 T 240 11 Q 265 5, 296 9"
+                stroke="#39FF14"
+                strokeWidth="5"
+                strokeLinecap="round"
+                fill="none"
+                opacity="0.85"
+              />
+            </svg>
+          </div>
         </div>
 
         {/* Heading */}

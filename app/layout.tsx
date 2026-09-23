@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Inter, Permanent_Marker } from "next/font/google";
+import { Space_Grotesk, Inter, Rock_Salt } from "next/font/google";
 import "./globals.css";
 import NavBar from "./components/NavBar";
 
@@ -15,8 +15,8 @@ const inter = Inter({
   weight: ["400", "500"],
 });
 
-const permanentMarker = Permanent_Marker({
-  variable: "--font-marker",
+const rockSalt = Rock_Salt({
+  variable: "--font-chalk",
   subsets: ["latin"],
   weight: "400",
 });
@@ -50,7 +50,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${spaceGrotesk.variable} ${inter.variable} ${permanentMarker.variable} h-full antialiased`}
+      className={`${spaceGrotesk.variable} ${inter.variable} ${rockSalt.variable} h-full antialiased`}
     >
       <body className="min-h-full bg-[#0A0A0A]">
         <NavBar />
