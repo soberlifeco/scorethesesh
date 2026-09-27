@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   title: "1:1 Coaching — Score The Sesh",
 };
 
-const BOOKING_URL = "https://buy.stripe.com/6oU7sD5ere6HbO7fTG7EQ09";
+const BOOKING_URL = "https://buy.stripe.com/8x27sD5er1jV9FZgXK7EQ07";
 
 const STATS = [
   { value: "4", label: "Sessions" },
@@ -99,7 +99,7 @@ export default function CoachingPage() {
           style={{ fontFamily: "var(--font-space-grotesk)" }}
           className="text-white font-bold text-4xl sm:text-5xl"
         >
-          £249.99
+          £324.99
         </span>
 
         <a
