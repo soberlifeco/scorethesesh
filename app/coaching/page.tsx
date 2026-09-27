@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   title: "1:1 Coaching — Score The Sesh",
 };
 
-const BOOKING_URL = "https://buy.stripe.com/8x27sD5er1jV9FZgXK7EQ07";
+const BOOKING_URL = "https://buy.stripe.com/9B63cneP1d2DbO7dLy7EQ08";
 
 const STATS = [
   { value: "4", label: "Sessions" },
