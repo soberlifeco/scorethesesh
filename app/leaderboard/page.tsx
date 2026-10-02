@@ -9,6 +9,8 @@ import { CHUNKS, CHUNK_SIZE, categoryBreakdown, type Sesh } from "@/lib/sesh-dat
 const RANGE_EMOJI = ["👑", "🐟", "🤠", "❌", "☠️"];
 const GRAVEYARD_EMOJI = "🪦";
 const GRAVEYARD_START_RANK = 51;
+const ABYSS_EMOJI = "🕳️";
+const ABYSS_START_RANK = 61;
 
 export default function LeaderboardPage() {
   const [openSesh, setOpenSesh] = useState<number | null>(null);
@@ -59,7 +61,9 @@ export default function LeaderboardPage() {
           const rangeEnd = rangeStart + chunk.length - 1;
           const isChunkOpen = openChunk === chunkIndex;
           const chunkEmoji =
-            rangeStart >= GRAVEYARD_START_RANK
+            rangeStart >= ABYSS_START_RANK
+              ? ABYSS_EMOJI
+              : rangeStart >= GRAVEYARD_START_RANK
               ? GRAVEYARD_EMOJI
               : RANGE_EMOJI[chunkIndex] ?? "";
 
