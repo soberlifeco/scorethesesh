@@ -106,8 +106,8 @@ export async function POST(req: NextRequest) {
   const scores: Record<string, number> = {};
   for (const key of catFields) {
     const value = Number(body?.[key]);
-    if (!Number.isInteger(value) || value < 0 || value > 5) {
-      return NextResponse.json({ error: `${key} must be a whole number 0–5.` }, { status: 400 });
+    if (!Number.isInteger(value) || value < -5 || value > 5) {
+      return NextResponse.json({ error: `${key} must be a whole number -5–5.` }, { status: 400 });
     }
     scores[key] = value;
   }
@@ -115,8 +115,8 @@ export async function POST(req: NextRequest) {
   let hangover: number | null = null;
   if (!oldEra) {
     const value = Number(body?.hangover);
-    if (!Number.isInteger(value) || value < 0 || value > 5) {
-      return NextResponse.json({ error: "hangover must be a whole number 0–5." }, { status: 400 });
+    if (!Number.isInteger(value) || value < -5 || value > 5) {
+      return NextResponse.json({ error: "hangover must be a whole number -5–5." }, { status: 400 });
     }
     hangover = value;
   }

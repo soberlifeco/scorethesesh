@@ -52,7 +52,7 @@ export default function ScoringSciencePage() {
         </h1>
 
         <div className="flex flex-col gap-3 text-white/70 text-sm sm:text-base leading-relaxed">
-          <p>Each category is scored out of 5.</p>
+          <p>Each category normally runs 0 to 5 — but can go as low as -5 for the seshes that earn it.</p>
           <p>
             There are 5 categories in total, meaning the max score that can be
             awarded is <span className="text-[#39FF14] font-bold">25/25</span>.
