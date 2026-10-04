@@ -76,6 +76,9 @@ export const SESH_DATA: Sesh[] = [
   { sesh: 63, music: 2, substances: 0, cat3: 4, hangover: 0, cat5: 5, total: 11, maxScore: 25, instagram: "https://www.instagram.com/reel/DeCkpOwNxBM/" },
 ];
 
+/** Highest sesh number logged so far; derived so new seshes never need a code change elsewhere. */
+export const MAX_SESH = Math.max(...SESH_DATA.map((s) => s.sesh));
+
 export const RANKED = [...SESH_DATA].sort((a, b) => b.total - a.total || a.sesh - b.sesh);
 
 export const CHUNK_SIZE = 10;

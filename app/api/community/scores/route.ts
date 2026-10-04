@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseServerClient, getVerifiedUser } from "@/lib/supabase";
-import { isOldEra, totalOfScores } from "@/lib/sesh-data";
+import { isOldEra, totalOfScores, MAX_SESH } from "@/lib/sesh-data";
 import { isRateLimited, clientIp } from "@/lib/rate-limit";
 
 type ScoreRow = {
@@ -27,7 +27,7 @@ export async function GET(req: NextRequest) {
   }
 
   const sesh = Number(req.nextUrl.searchParams.get("sesh"));
-  if (!Number.isInteger(sesh) || sesh < 1 || sesh > 45) {
+  if (!Number.isInteger(sesh) || sesh < 1 || sesh > MAX_SESH) {
     return NextResponse.json({ error: "Invalid sesh number." }, { status: 400 });
   }
 
@@ -97,7 +97,7 @@ export async function POST(req: NextRequest) {
   const sesh = Number(body?.sesh);
   const notes = typeof body?.notes === "string" ? body.notes.trim().slice(0, 500) : "";
 
-  if (!Number.isInteger(sesh) || sesh < 1 || sesh > 45) {
+  if (!Number.isInteger(sesh) || sesh < 1 || sesh > MAX_SESH) {
     return NextResponse.json({ error: "Invalid sesh number." }, { status: 400 });
   }
 

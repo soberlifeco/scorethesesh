@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import type { Session } from "@supabase/supabase-js";
 import { getSupabaseBrowserClient } from "@/lib/supabase-browser";
-import { ORDERED_CHUNKS, CHUNK_SIZE, categoryLabels, isOldEra, maxScoreForSesh, type Sesh } from "@/lib/sesh-data";
+import { ORDERED_CHUNKS, CHUNK_SIZE, MAX_SESH, categoryLabels, isOldEra, maxScoreForSesh, type Sesh } from "@/lib/sesh-data";
 import { displayUsername } from "@/lib/format";
 
 type Account = { userId: string; email: string; username: string; accessToken: string };
@@ -455,7 +455,7 @@ function ScoreCard({ entry, isOpen, onToggle, account }: { entry: Sesh; isOpen: 
 function YourTurnToScorePageContent() {
   const searchParams = useSearchParams();
   const targetSesh = Number(searchParams.get("sesh"));
-  const hasTarget = Number.isInteger(targetSesh) && targetSesh >= 1 && targetSesh <= 45;
+  const hasTarget = Number.isInteger(targetSesh) && targetSesh >= 1 && targetSesh <= MAX_SESH;
 
   const [account, setAccount] = useState<Account | null>(null);
   const [checkedSession, setCheckedSession] = useState(false);
