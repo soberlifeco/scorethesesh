@@ -40,15 +40,23 @@ export default async function CommunityScoresPage() {
   let loadError = false;
 
   if (supabase) {
-    const { data, error } = await supabase
-      .from("community_scores")
-      .select("username, sesh, music, substances, cat3, hangover, cat5, notes, updated_at")
-      .order("updated_at", { ascending: false })
-      .limit(50);
-    if (error) {
-      loadError = true;
-    } else {
-      rows = (data ?? []) as FeedRow[];
+    // Fetch every score, newest first. Supabase caps a single request at
+    // 1000 rows, so page through until we run out.
+    const PAGE_SIZE = 1000;
+    for (let from = 0; ; from += PAGE_SIZE) {
+      const { data, error } = await supabase
+        .from("community_scores")
+        .select("username, sesh, music, substances, cat3, hangover, cat5, notes, updated_at")
+        .order("updated_at", { ascending: false })
+        .range(from, from + PAGE_SIZE - 1);
+      if (error) {
+        loadError = true;
+        rows = [];
+        break;
+      }
+      const page = (data ?? []) as FeedRow[];
+      rows.push(...page);
+      if (page.length < PAGE_SIZE) break;
     }
   }
 
@@ -73,6 +81,12 @@ export default async function CommunityScoresPage() {
           Every community score, newest first. Screenshot &apos;em, argue
           about &apos;em, whatever you like.
         </p>
+
+        {!loadError && rows.length > 0 && (
+          <p className="text-white/40 text-xs">
+            {rows.length} score{rows.length === 1 ? "" : "s"} and counting
+          </p>
+        )}
       </div>
 
       <div className="flex flex-col gap-3 max-w-2xl w-full mt-8">
