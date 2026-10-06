@@ -22,14 +22,22 @@ const CATEGORIES = [
     copy: "A wide spectrum category, this one. It gathers the impact of the people, the location, the atmosphere and anything else relevant. The higher the better.",
   },
   {
-    name: "Hangover",
-    direction: "Worse hangover = higher score",
-    copy: "If you're waking up hungover or coming down hard, it usually means you went too far / had an amazing night. Worse the next day feels, higher the score.",
-  },
-  {
     name: "WTF",
     direction: "Crazier sesh = higher score",
     copy: "Says it on the tin. The higher the rating, the crazier the sesh — things we don't usually see. The more we say what the fuck, the higher it goes.",
+  },
+  {
+    name: "ROI (Return on Indulgence)",
+    direction: "More worthwhile sesh = higher score",
+    copy: "We've all been on the sesh — this category is to determine how worthwhile that sesh actually was. It encapsulates a lot of the other scores into one. Think of it as the next day/week in a nutshell. Replaced Hangover from Episode 66.",
+  },
+];
+
+const VAULTED = [
+  {
+    name: "Hangover",
+    direction: "Vaulted from Episode 66",
+    copy: "Worse hangover = higher score. If you were waking up hungover or coming down hard, it usually meant you went too far / had an amazing night. It's been vaulted — but not gone forever. Episodes 40-65 were scored with it.",
   },
 ];
 
@@ -80,6 +88,34 @@ export default function ScoringSciencePage() {
               </span>
             </div>
             <p className="text-white/70 text-sm sm:text-base leading-relaxed">
+              {category.copy}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      {/* Vaulted categories */}
+      <div className="flex flex-col gap-4 max-w-md w-full mt-8">
+        <p className="text-white/40 text-xs font-medium uppercase tracking-[0.2em] text-center">
+          In the vault
+        </p>
+        {VAULTED.map((category) => (
+          <div
+            key={category.name}
+            className="text-left bg-white/[0.03] border border-white/10 rounded-2xl p-5 sm:p-6 opacity-70"
+          >
+            <div className="flex flex-col gap-1 mb-2">
+              <h2
+                style={{ fontFamily: "var(--font-space-grotesk)" }}
+                className="text-white font-bold text-xl sm:text-2xl"
+              >
+                {category.name}
+              </h2>
+              <span className="text-white/50 text-[11px] sm:text-xs font-medium uppercase tracking-wide">
+                {category.direction}
+              </span>
+            </div>
+            <p className="text-white/60 text-sm sm:text-base leading-relaxed">
               {category.copy}
             </p>
           </div>

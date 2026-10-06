@@ -76,6 +76,7 @@ export const SESH_DATA: Sesh[] = [
   { sesh: 63, music: 2, substances: 0, cat3: 4, hangover: 0, cat5: 5, total: 11, maxScore: 25, instagram: "https://www.instagram.com/reel/DeCkpOwNxBM/" },
   { sesh: 64, music: 2, substances: 1, cat3: 4, hangover: 2, cat5: 4, total: 13, maxScore: 25, instagram: "https://www.instagram.com/soberlifetom/reel/DeFLTvQtTgv/" },
   { sesh: 65, music: 0, substances: 4, cat3: -1, hangover: 5, cat5: 5, total: 13, maxScore: 25, instagram: "https://www.instagram.com/soberlifetom/reel/DeHv4a2t0Qq/" },
+  { sesh: 66, music: 2, substances: 1, cat3: 4, hangover: 4, cat5: 3, total: 14, maxScore: 25, instagram: "https://www.instagram.com/soberlifetom/reel/DeKRkPztmqQ/" },
 ];
 
 /** Highest sesh number logged so far; derived so new seshes never need a code change elsewhere. */
@@ -100,7 +101,14 @@ export function isOldEra(sesh: number): boolean {
   return sesh >= 14 && sesh <= 39;
 }
 
-/** Category labels for a given sesh, in a fixed order. "hangover" key is omitted (null) for the old era. */
+/** From this sesh onwards Hangover is vaulted and replaced by ROI (Return on Indulgence). The score is still stored in the "hangover" column. */
+export const ROI_START = 66;
+
+export function usesRoi(sesh: number): boolean {
+  return sesh >= ROI_START;
+}
+
+/** Category labels for a given sesh, in a fixed order. "hangover" key is omitted (null) for the old era. From ROI_START the "hangover" key holds ROI. */
 export function categoryLabels(sesh: number): { key: "music" | "substances" | "cat3" | "hangover" | "cat5"; label: string }[] {
   if (isOldEra(sesh)) {
     return [
@@ -108,6 +116,15 @@ export function categoryLabels(sesh: number): { key: "music" | "substances" | "c
       { key: "substances", label: "Substances" },
       { key: "cat3", label: "Atmosphere/Location" },
       { key: "cat5", label: "Characters/Talent" },
+    ];
+  }
+  if (usesRoi(sesh)) {
+    return [
+      { key: "music", label: "Music" },
+      { key: "substances", label: "Substances" },
+      { key: "cat5", label: "Vibes" },
+      { key: "cat3", label: "WTF" },
+      { key: "hangover", label: "ROI" },
     ];
   }
   return [
