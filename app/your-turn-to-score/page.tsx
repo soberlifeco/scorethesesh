@@ -53,6 +53,7 @@ function AuthForm({ onLoggedIn }: { onLoggedIn: (account: Account) => void }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
+  const [marketingOptIn, setMarketingOptIn] = useState(false);
   const [status, setStatus] = useState<"idle" | "loading" | "error" | "check-email" | "reset-sent">("idle");
   const [error, setError] = useState("");
 
@@ -116,6 +117,14 @@ function AuthForm({ onLoggedIn }: { onLoggedIn: (account: Account) => void }) {
         setStatus("error");
         setError(signUpError.message);
         return;
+      }
+      if (marketingOptIn) {
+        // Fire and forget: never block account creation on the mailing list.
+        fetch("/api/subscribe", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: email.trim(), source: "account" }),
+        }).catch(() => {});
       }
       if (!data.session) {
         // Email confirmation is required before they can log in.
@@ -214,6 +223,20 @@ function AuthForm({ onLoggedIn }: { onLoggedIn: (account: Account) => void }) {
         placeholder="Password (6+ characters)"
         className="w-full bg-white/5 border border-white/15 rounded-full px-5 py-3 text-white text-sm placeholder:text-white/30 outline-none focus:border-[#39FF14]/70 transition-colors duration-200"
       />
+
+      {mode === "signup" && (
+        <label className="w-full flex items-start gap-3 text-left text-white/60 text-xs sm:text-sm leading-snug cursor-pointer">
+          <input
+            type="checkbox"
+            checked={marketingOptIn}
+            onChange={(e) => setMarketingOptIn(e.target.checked)}
+            className="mt-0.5 h-4 w-4 shrink-0 accent-[#39FF14]"
+          />
+          <span>
+            Email me about All Seshed Out and new Score The Sesh stuff. Unsubscribe any time.
+          </span>
+        </label>
+      )}
 
       {mode === "login" && (
         <button

@@ -1,8 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
+import { clientIp, isRateLimited } from "@/lib/rate-limit";
 
 export async function POST(req: NextRequest) {
+  if (isRateLimited(`subscribe:${clientIp(req)}`, 10, 10 * 60_000)) {
+    return NextResponse.json(
+      { error: "Too many attempts. Try again in a few minutes." },
+      { status: 429 }
+    );
+  }
+
   const apiKey = process.env.MAILERLITE_API_KEY;
-  const groupId = process.env.MAILERLITE_GROUP_ID;
 
   if (!apiKey) {
     console.error("MAILERLITE_API_KEY is not set");
@@ -13,9 +20,11 @@ export async function POST(req: NextRequest) {
   }
 
   let email: string | undefined;
+  let source: string | undefined;
   try {
     const body = await req.json();
     email = body?.email;
+    source = typeof body?.source === "string" ? body.source : undefined;
   } catch {
     return NextResponse.json({ error: "Invalid request." }, { status: 400 });
   }
@@ -26,6 +35,13 @@ export async function POST(req: NextRequest) {
       { status: 400 }
     );
   }
+
+  // People who made a Your Turn To Score account (and opted in) can go in
+  // their own MailerLite group; falls back to the main group.
+  const groupId =
+    source === "account"
+      ? process.env.MAILERLITE_ACCOUNTS_GROUP_ID || process.env.MAILERLITE_GROUP_ID
+      : process.env.MAILERLITE_GROUP_ID;
 
   try {
     const mlRes = await fetch("https://connect.mailerlite.com/api/subscribers", {
