@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { MailerLiteForm } from "./MailerLiteForm";
+import { BuyPanel } from "./BuyPanel";
 
 export const metadata: Metadata = {
   title: "All Seshed Out — with soberlifetom",
@@ -32,6 +33,8 @@ export default function AllSeshedOutPage() {
       <div className="mt-10 sm:mt-12 max-w-md w-full">
         <MailerLiteForm />
       </div>
+
+      <BuyPanel />
 
       <Link
         href="/"
