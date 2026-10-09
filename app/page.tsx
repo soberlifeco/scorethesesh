@@ -1,8 +1,5 @@
 import Link from "next/link";
 
-const INSTAGRAM_URL = "https://www.instagram.com/soberlifetom";
-const DONATE_URL = "https://donate.stripe.com/00wfZ9bCP9QrcSb0YM7EQ06";
-
 export default function HomePage() {
   return (
     <div
@@ -40,67 +37,14 @@ export default function HomePage() {
           </p>
         </div>
 
-        {/* Scoring Science link */}
+        {/* All Seshed Out CTA */}
         <Link
-          href="/scoring-science"
+          href="/all-seshed-out"
           style={{ fontFamily: "var(--font-space-grotesk)" }}
-          className="text-[#39FF14] text-sm sm:text-base font-bold underline underline-offset-4 hover:brightness-110 transition-all duration-200"
+          className="mt-2 w-full bg-[#39FF14] text-black font-black uppercase tracking-wide px-6 py-5 sm:py-6 rounded-2xl text-lg sm:text-2xl text-center leading-tight hover:brightness-110 transition-all duration-200"
         >
-          See the Scoring Science →
+          Click here to register interest for All Seshed Out
         </Link>
-
-        {/* Links to the rest of the site */}
-        <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
-          <Link
-            href="/leaderboard"
-            className="text-white/60 text-xs sm:text-sm underline underline-offset-4 hover:text-white transition-colors duration-200"
-          >
-            Sesh Leaderboard
-          </Link>
-          <Link
-            href="/your-turn-to-score"
-            className="text-white/60 text-xs sm:text-sm underline underline-offset-4 hover:text-white transition-colors duration-200"
-          >
-            Your Turn To Score
-          </Link>
-          <Link
-            href="/community-scores"
-            className="text-white/60 text-xs sm:text-sm underline underline-offset-4 hover:text-white transition-colors duration-200"
-          >
-            Community Scores
-          </Link>
-          <a
-            href={DONATE_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-white/60 text-xs sm:text-sm underline underline-offset-4 hover:text-white transition-colors duration-200"
-          >
-            Support Score The Sesh
-          </a>
-        </div>
-
-        {/* Donate CTA */}
-        <div className="w-full flex flex-col items-center gap-3 mt-2">
-          <a
-            href={DONATE_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ fontFamily: "var(--font-space-grotesk)" }}
-            className="bg-[#39FF14] text-black font-bold px-8 py-3 rounded-full text-sm sm:text-base text-center hover:brightness-110 transition-all duration-200"
-          >
-            Click here to Support Score The Sesh
-          </a>
-        </div>
-
-        {/* Secondary link */}
-        <a
-          href={INSTAGRAM_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-white/70 text-xs sm:text-sm underline underline-offset-4 hover:text-white transition-colors duration-200"
-        >
-          Follow @soberlifetom on Instagram
-        </a>
       </div>
 
       {/* Footer */}
