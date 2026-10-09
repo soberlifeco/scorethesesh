@@ -12,7 +12,7 @@ const FORM_HTML = `
 @keyframes ml-form-embedSubmitLoad { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 #mlb2-46463845.ml-form-embedContainer { box-sizing: border-box; display: table; margin: 0 auto; position: static; width: 100% !important; }
 #mlb2-46463845.ml-form-embedContainer h4, #mlb2-46463845.ml-form-embedContainer p, #mlb2-46463845.ml-form-embedContainer span, #mlb2-46463845.ml-form-embedContainer button { text-transform: none !important; letter-spacing: normal !important; }
-#mlb2-46463845.ml-form-embedContainer .ml-form-embedWrapper { background-color: #f6f6f6; border-width: 0px; border-color: transparent; border-radius: 4px; border-style: solid; box-sizing: border-box; display: inline-block !important; margin: 0; padding: 0; position: relative; }
+#mlb2-46463845.ml-form-embedContainer .ml-form-embedWrapper { background-color: rgba(255,255,255,0.05); border-width: 1px; border-color: rgba(255,255,255,0.12); border-radius: 18px; border-style: solid; box-sizing: border-box; display: inline-block !important; margin: 0; padding: 0; position: relative; }
 #mlb2-46463845.ml-form-embedContainer .ml-form-embedWrapper.embedPopup, #mlb2-46463845.ml-form-embedContainer .ml-form-embedWrapper.embedDefault { width: 400px; }
 #mlb2-46463845.ml-form-embedContainer .ml-form-embedWrapper.embedForm { max-width: 400px; width: 100%; }
 #mlb2-46463845.ml-form-embedContainer .ml-form-align-left { text-align: left; }
@@ -20,21 +20,23 @@ const FORM_HTML = `
 #mlb2-46463845.ml-form-embedContainer .ml-form-align-default { display: table-cell !important; vertical-align: middle !important; text-align: center !important; }
 #mlb2-46463845.ml-form-embedContainer .ml-form-align-right { text-align: right; }
 #mlb2-46463845.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedHeader img { border-top-left-radius: 4px; border-top-right-radius: 4px; height: auto; margin: 0 auto !important; max-width: 100%; }
-#mlb2-46463845.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody, #mlb2-46463845.ml-form-embedContainer .ml-form-embedWrapper .ml-form-successBody { padding: 20px 20px 0 20px; }
+#mlb2-46463845.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody, #mlb2-46463845.ml-form-embedContainer .ml-form-embedWrapper .ml-form-successBody { padding: 26px 22px 0 22px; }
 #mlb2-46463845.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody.ml-form-embedBodyHorizontal { padding-bottom: 0; }
-#mlb2-46463845.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-embedContent, #mlb2-46463845.ml-form-embedContainer .ml-form-embedWrapper .ml-form-successBody .ml-form-successContent { text-align: left; margin: 0 0 20px 0; }
-#mlb2-46463845.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-embedContent h4, #mlb2-46463845.ml-form-embedContainer .ml-form-embedWrapper .ml-form-successBody .ml-form-successContent h4 { color: #000000; font-family: 'Open Sans', Arial, Helvetica, sans-serif; font-size: 30px; font-weight: 400; margin: 0 0 10px 0; text-align: left; word-break: break-word; }
-#mlb2-46463845.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-embedContent p, #mlb2-46463845.ml-form-embedContainer .ml-form-embedWrapper .ml-form-successBody .ml-form-successContent p { color: #000000; font-family: 'Open Sans', Arial, Helvetica, sans-serif; font-size: 14px; font-weight: 400; line-height: 20px; margin: 0 0 10px 0; text-align: left; }
+#mlb2-46463845.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-embedContent, #mlb2-46463845.ml-form-embedContainer .ml-form-embedWrapper .ml-form-successBody .ml-form-successContent { text-align: center; margin: 0 0 18px 0; }
+#mlb2-46463845.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-embedContent h4, #mlb2-46463845.ml-form-embedContainer .ml-form-embedWrapper .ml-form-successBody .ml-form-successContent h4 { color: #ffffff; font-family: var(--font-space-grotesk), 'Open Sans', Arial, Helvetica, sans-serif; font-size: 24px; font-weight: 700; margin: 0 0 8px 0; text-align: center; word-break: break-word; }
+#mlb2-46463845.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-embedContent p, #mlb2-46463845.ml-form-embedContainer .ml-form-embedWrapper .ml-form-successBody .ml-form-successContent p { color: rgba(255,255,255,0.7); font-family: var(--font-inter), 'Open Sans', Arial, Helvetica, sans-serif; font-size: 14px; font-weight: 400; line-height: 20px; margin: 0 0 10px 0; text-align: center; }
 #mlb2-46463845.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-embedContent p:last-child, #mlb2-46463845.ml-form-embedContainer .ml-form-embedWrapper .ml-form-successBody .ml-form-successContent p:last-child { margin: 0; }
 #mlb2-46463845.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody form { margin: 0; width: 100%; }
 #mlb2-46463845.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-formContent, #mlb2-46463845.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-checkboxRow { margin: 0 0 20px 0; width: 100%; }
 #mlb2-46463845.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-fieldRow { margin: 0 0 10px 0; width: 100%; }
 #mlb2-46463845.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-fieldRow.ml-last-item { margin: 0; }
-#mlb2-46463845.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-fieldRow input { background-color: #ffffff !important; color: #333333 !important; border-color: #cccccc; border-radius: 4px !important; border-style: solid !important; border-width: 1px !important; font-family: 'Open Sans', Arial, Helvetica, sans-serif; font-size: 14px !important; height: auto; line-height: 21px !important; margin: 0; padding: 10px 10px !important; width: 100% !important; box-sizing: border-box !important; max-width: 100% !important; }
+#mlb2-46463845.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-fieldRow input { background-color: rgba(255,255,255,0.06) !important; color: #ffffff !important; border-color: rgba(255,255,255,0.18); border-radius: 9999px !important; border-style: solid !important; border-width: 1px !important; font-family: var(--font-inter), 'Open Sans', Arial, Helvetica, sans-serif; font-size: 15px !important; height: auto; line-height: 21px !important; margin: 0; padding: 13px 20px !important; outline: none; width: 100% !important; box-sizing: border-box !important; max-width: 100% !important; }
 #mlb2-46463845.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-embedSubmit { margin: 0 0 20px 0; float: left; width: 100%; }
-#mlb2-46463845.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-embedSubmit button { background-color: #000000 !important; border: none !important; border-radius: 4px !important; box-shadow: none !important; color: #ffffff !important; cursor: pointer; font-family: 'Open Sans', Arial, Helvetica, sans-serif !important; font-size: 14px !important; font-weight: 700 !important; line-height: 21px !important; height: auto; padding: 10px !important; width: 100% !important; box-sizing: border-box !important; }
+#mlb2-46463845.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-embedSubmit button { background-color: #39FF14 !important; border: none !important; border-radius: 9999px !important; box-shadow: none !important; color: #000000 !important; cursor: pointer; font-family: var(--font-space-grotesk), 'Open Sans', Arial, Helvetica, sans-serif !important; font-size: 15px !important; font-weight: 700 !important; line-height: 21px !important; height: auto; padding: 13px !important; width: 100% !important; box-sizing: border-box !important; }
 #mlb2-46463845.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-embedSubmit button.loading { display: none; }
-#mlb2-46463845.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-embedSubmit button:hover { background-color: #333333 !important; }
+#mlb2-46463845.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-embedSubmit button:hover { background-color: #5dff3f !important; }
+#mlb2-46463845.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-fieldRow input::placeholder { color: rgba(255,255,255,0.4); }
+#mlb2-46463845.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-fieldRow input:focus { border-color: rgba(57,255,20,0.7) !important; }
 .ml-error input, .ml-error textarea, .ml-error select { border-color: red !important; }
 @media only screen and (max-width: 400px) { .ml-form-embedWrapper.embedDefault, .ml-form-embedWrapper.embedPopup { width: 100% !important; } }
 </style>
@@ -57,7 +59,7 @@ const FORM_HTML = `
           </div>
           <input type="hidden" name="ml-submit" value="1">
           <div class="ml-form-embedSubmit">
-            <button type="submit" class="primary">Subscribe</button>
+            <button type="submit" class="primary">Register interest</button>
             <button disabled="disabled" style="display: none;" type="button" class="loading">
               <div class="ml-form-embedSubmitLoad"></div>
               <span class="sr-only">Loading...</span>
@@ -68,8 +70,8 @@ const FORM_HTML = `
       </div>
       <div class="ml-form-successBody row-success" style="display: none">
         <div class="ml-form-successContent">
-          <h4>Thank you!</h4>
-          <p>You have successfully joined our subscriber list.</p>
+          <h4>You are on the list</h4>
+          <p>I will email you before anyone else. Keep an eye on your inbox, and check spam or promotions just in case.</p>
         </div>
       </div>
     </div>
