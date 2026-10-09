@@ -3,13 +3,27 @@ import { getSupabaseServerClient } from "@/lib/supabase";
 import { verifyStripeSignature } from "@/lib/stripe-webhook";
 import { SESHED_OUT_PRODUCT_TAG } from "@/lib/seshed-out-config";
 
+type Address = {
+  line1?: string | null;
+  line2?: string | null;
+  city?: string | null;
+  state?: string | null;
+  postal_code?: string | null;
+  country?: string | null;
+};
+
+type ShippingDetails = { name?: string | null; address?: Address | null };
+
 type CheckoutSession = {
   id: string;
   payment_status?: string;
   amount_total?: number | null;
   currency?: string | null;
   customer_email?: string | null;
-  customer_details?: { email?: string | null } | null;
+  customer_details?: { email?: string | null; name?: string | null } | null;
+  // Newer Stripe API versions put it under collected_information, older ones at the top level.
+  collected_information?: { shipping_details?: ShippingDetails | null } | null;
+  shipping_details?: ShippingDetails | null;
   metadata?: Record<string, string> | null;
 };
 
@@ -66,6 +80,11 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ received: true, ignored: "no email" });
   }
 
+  const shipping =
+    session.collected_information?.shipping_details ??
+    session.shipping_details ??
+    null;
+
   const supabase = getSupabaseServerClient();
   if (!supabase) {
     console.error("Supabase is not configured");
@@ -78,6 +97,9 @@ export async function POST(req: NextRequest) {
       stripe_session_id: session.id,
       amount_total: session.amount_total ?? null,
       currency: session.currency ?? null,
+      customer_name: session.customer_details?.name ?? null,
+      shipping_name: shipping?.name ?? null,
+      shipping_address: shipping?.address ?? null,
     },
     { onConflict: "stripe_session_id" }
   );

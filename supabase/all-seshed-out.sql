@@ -8,6 +8,9 @@ create table if not exists public.seshed_out_purchases (
   stripe_session_id text not null unique,
   amount_total integer,
   currency text,
+  customer_name text,
+  shipping_name text,
+  shipping_address jsonb,
   created_at timestamptz not null default now()
 );
 

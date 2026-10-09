@@ -15,3 +15,15 @@ export const SESHED_OUT_PRODUCT_TAG = "all-seshed-out";
 
 /** Display only. The real price lives in Stripe (STRIPE_PRICE_ID) — keep these in step. */
 export const SESHED_OUT_PRICE_LABEL = "£12.99";
+
+/**
+ * Countries Stripe Checkout will collect a postal address for (the free tote
+ * bag). Checkout only accepts addresses from this list, so it also decides
+ * who can buy. Trim it if postage abroad costs too much.
+ */
+export const SESHED_OUT_SHIPPING_COUNTRIES = [
+  "GB", "IE", "US", "CA", "AU", "NZ",
+  "FR", "DE", "ES", "IT", "NL", "BE", "PT", "AT", "SE", "DK", "FI", "PL",
+  "CZ", "GR", "HU", "RO", "BG", "HR", "SK", "SI", "LT", "LV", "EE", "LU", "MT", "CY",
+  "CH", "NO", "IS",
+] as const;

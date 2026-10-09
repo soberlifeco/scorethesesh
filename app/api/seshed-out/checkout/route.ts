@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { clientIp, isRateLimited } from "@/lib/rate-limit";
-import { isSalesOpen, SESHED_OUT_PRODUCT_TAG } from "@/lib/seshed-out-config";
+import {
+  isSalesOpen,
+  SESHED_OUT_PRODUCT_TAG,
+  SESHED_OUT_SHIPPING_COUNTRIES,
+} from "@/lib/seshed-out-config";
 
 /**
  * Creates a Stripe Checkout Session for All Seshed Out and returns its URL.
@@ -43,6 +47,11 @@ export async function POST(req: NextRequest) {
     cancel_url: `${siteUrl}/all-seshed-out?checkout=cancelled`,
     allow_promotion_codes: "true",
     "metadata[product]": SESHED_OUT_PRODUCT_TAG,
+  });
+
+  // Ask for a postal address so the tote bag can be sent.
+  SESHED_OUT_SHIPPING_COUNTRIES.forEach((country, i) => {
+    params.append(`shipping_address_collection[allowed_countries][${i}]`, country);
   });
 
   try {

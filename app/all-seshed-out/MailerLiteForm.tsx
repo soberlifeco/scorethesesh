@@ -44,8 +44,8 @@ const FORM_HTML = `
     <div class="ml-form-embedWrapper embedForm">
       <div class="ml-form-embedBody ml-form-embedBodyDefault row-form">
         <div class="ml-form-embedContent">
-          <h4>something is coming on the 6th December!</h4>
-          <p><br></p>
+          <h4>Get on the list</h4>
+          <p>Launch updates, and first in line on 6th December.</p>
         </div>
         <form class="ml-block-form" action="https://assets.mailerlite.com/jsonp/2638909/forms/199881784273405207/subscribe" data-code="" method="post" target="_blank">
           <div class="ml-form-formContent">
