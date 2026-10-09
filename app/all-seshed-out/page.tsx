@@ -53,6 +53,20 @@ export default function AllSeshedOutPage() {
           </ul>
         </div>
 
+        <div className="w-full text-left">
+          <p className="text-white text-sm sm:text-base leading-relaxed">
+            I have created this product for all involved in the sesh:
+          </p>
+          <ul className="mt-3 flex flex-col gap-2 text-sm sm:text-base text-white/85 list-disc pl-5">
+            <li>to help the people that want to cut back, do just that</li>
+            <li>to help the sober gang, stay that way</li>
+            <li>
+              to help the sesh heads, enjoy the moment without shame, with an
+              entry point if it ever gets too much
+            </li>
+          </ul>
+        </div>
+
         <p className="text-white/60 text-xs sm:text-sm">
           Launching 6th December · {SESHED_OUT_PRICE_LABEL} one-off. Register
           your interest below and you&apos;ll hear first.
