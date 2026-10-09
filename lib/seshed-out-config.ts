@@ -14,7 +14,7 @@ export function isSalesOpen(nowMs: number = Date.now()): boolean {
 export const SESHED_OUT_PRODUCT_TAG = "all-seshed-out";
 
 /** Display only. The real price lives in Stripe (STRIPE_PRICE_ID) — keep these in step. */
-export const SESHED_OUT_PRICE_LABEL = "£12.99";
+export const SESHED_OUT_PRICE_LABEL = "£19.99";
 
 /**
  * Countries Stripe Checkout will collect a postal address for (the free tote
