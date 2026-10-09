@@ -34,10 +34,6 @@ export default function AllSeshedOutPage() {
           it&quot;
         </p>
 
-        <p className="text-white/80 text-sm sm:text-base leading-relaxed">
-          A sesh survival guide for those already sober/curious folk
-        </p>
-
         <div className="w-full rounded-xl border border-[#39FF14]/40 bg-white/5 px-5 py-4 text-left">
           <p
             style={{ fontFamily: "var(--font-space-grotesk)" }}
@@ -46,6 +42,9 @@ export default function AllSeshedOutPage() {
             Bonus
           </p>
           <ul className="mt-3 flex flex-col gap-3 text-sm sm:text-base text-white/85 list-disc pl-5">
+            <li>
+              A sesh survival guide for those already sober/curious folk
+            </li>
             <li>
               3 exclusive Score The Sesh deep dive videos - to make you laugh
               but also think and reflect
