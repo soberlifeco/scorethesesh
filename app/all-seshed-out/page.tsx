@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { MailerLiteForm } from "./MailerLiteForm";
 import { BuyPanel } from "./BuyPanel";
-import { SESHED_OUT_PRICE_LABEL } from "@/lib/seshed-out-config";
 
 export const metadata: Metadata = {
   title: "All Seshed Out — from soberlifetom",
@@ -49,7 +48,6 @@ export default function AllSeshedOutPage() {
               3 exclusive Score The Sesh deep dive videos - to make you laugh
               but also think and reflect
             </li>
-            <li>A free Score The Sesh tote bag delivered to your address</li>
           </ul>
         </div>
 
@@ -68,8 +66,8 @@ export default function AllSeshedOutPage() {
         </div>
 
         <p className="text-white/60 text-xs sm:text-sm">
-          Launching 6th December · {SESHED_OUT_PRICE_LABEL} one-off. Register
-          your interest below and you&apos;ll hear first.
+          Launching 6th December, and it&apos;s free. Register your interest
+          below and you&apos;ll hear first.
         </p>
       </div>
 

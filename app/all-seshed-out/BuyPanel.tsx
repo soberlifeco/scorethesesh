@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { isSalesOpen, SESHED_OUT_PRICE_LABEL } from "@/lib/seshed-out-config";
+import { isSalesOpen } from "@/lib/seshed-out-config";
 import { useClientValue } from "@/lib/use-client-value";
 
 /**
@@ -44,7 +44,7 @@ export function BuyPanel() {
         style={{ fontFamily: "var(--font-space-grotesk)" }}
         className="w-full rounded-lg bg-[#39FF14] px-6 py-4 text-lg font-bold uppercase tracking-wide text-black transition-opacity hover:opacity-90 disabled:opacity-60"
       >
-        {loading ? "Taking you to checkout..." : `Get All Seshed Out · ${SESHED_OUT_PRICE_LABEL}`}
+        {loading ? "Taking you to checkout..." : "Get All Seshed Out"}
       </button>
       {error && <p className="text-sm text-red-400">{error}</p>}
       <Link

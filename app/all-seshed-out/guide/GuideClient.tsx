@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { getSupabaseBrowserClient } from "@/lib/supabase-browser";
-import { isSalesOpen, SESHED_OUT_PRICE_LABEL } from "@/lib/seshed-out-config";
+import { isSalesOpen } from "@/lib/seshed-out-config";
 import { useClientValue } from "@/lib/use-client-value";
 // Type-only import: erased at build time, so no paid content reaches the bundle.
 import type { Phase, Week } from "@/lib/seshed-out-content";
@@ -217,7 +217,7 @@ export function GuideClient() {
             href="/all-seshed-out"
             className="text-sm text-white/60 underline underline-offset-4 hover:text-white"
           >
-            Haven&apos;t bought it yet? Get All Seshed Out ({SESHED_OUT_PRICE_LABEL})
+            Haven&apos;t bought it yet? Get All Seshed Out
           </Link>
         )}
       </div>
