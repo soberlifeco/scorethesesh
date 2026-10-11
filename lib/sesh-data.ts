@@ -80,6 +80,8 @@ export const SESH_DATA: Sesh[] = [
   { sesh: 67, music: 1, substances: 3, cat3: 2, hangover: 5, cat5: 4, total: 15, maxScore: 25, instagram: "https://www.instagram.com/soberlifetom/reel/DeM3WCnNn1M/" },
   { sesh: 68, music: 4, substances: 4, cat3: 5, hangover: 0, cat5: -1, total: 12, maxScore: 25, instagram: "https://www.instagram.com/soberlifetom/reel/DePcKA8twmI/" },
   { sesh: 69, music: 0, substances: 2, cat3: 4, hangover: 3, cat5: 4, total: 13, maxScore: 25, instagram: "https://www.instagram.com/soberlifetom/reel/DeSBf53NKsA/" },
+  { sesh: 70, music: -1, substances: 5, cat3: 2, hangover: 3, cat5: 4, total: 13, maxScore: 25, instagram: "https://www.instagram.com/soberlifetom/reel/DeUnM3_tvuS/" },
+  { sesh: 71, music: 5, substances: 5, cat3: 4, hangover: 2, cat5: 4, total: 20, maxScore: 25, instagram: "https://www.instagram.com/soberlifetom/reel/DeXLfmCNSE6/" },
 ];
 
 /** Highest sesh number logged so far; derived so new seshes never need a code change elsewhere. */
