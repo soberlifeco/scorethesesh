@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { CHUNKS, CHUNK_SIZE, categoryBreakdown, type Sesh } from "@/lib/sesh-data";
+import { CHUNKS, CHUNK_SIZE, categoryBreakdown, categoryMaxForSesh, scorePercent, type Sesh } from "@/lib/sesh-data";
 
 // One emoji per 10-sesh rank band: 1–10, 11–20, 21–30, 31–40, 41–50.
 // Anything ranked 51 or worse gets a gravestone instead.
@@ -34,8 +34,8 @@ export default function LeaderboardPage() {
         </h1>
 
         <p className="text-white/70 text-sm sm:text-base leading-relaxed">
-          Every sesh, sorted highest score to lowest. Tap any sesh to see
-          the category breakdown.
+          Every sesh, ranked by percentage of its max score so every era
+          is compared fairly. Tap any sesh to see the category breakdown.
         </p>
       </div>
 
@@ -51,6 +51,19 @@ export default function LeaderboardPage() {
           Talent all used to be scored categories and are now vaulted (not
           gone forever, just resting). Keep that in mind comparing seshes
           from different eras.
+        </p>
+      </div>
+
+      {/* New scoring era note */}
+      <div className="max-w-2xl w-full mt-4 bg-[#39FF14]/5 border border-[#39FF14]/30 rounded-2xl p-4 sm:p-5 text-left">
+        <p className="text-[#39FF14] text-[11px] sm:text-xs font-bold uppercase tracking-wide mb-2">
+          New era: out of 50
+        </p>
+        <p className="text-white/70 text-xs sm:text-sm leading-relaxed">
+          From Sesh 76 onwards, every category is scored from -10 to 10, so the
+          max score is 50 rather than 25. The leaderboard ranks by
+          percentage of the max, so a 39/50 (78%) is judged fairly against
+          scores from the older eras.
         </p>
       </div>
 
@@ -131,6 +144,9 @@ export default function LeaderboardPage() {
                           <div className="flex items-center gap-3 shrink-0">
                             <span className="text-white/70 text-xs sm:text-sm tabular-nums">
                               {entry.total}/{entry.maxScore}
+                              <span className="text-white/40 ml-1.5">
+                                {scorePercent(entry)}%
+                              </span>
                             </span>
                             <span
                               className={`text-white/40 text-xs transition-transform duration-200 ${
@@ -154,7 +170,7 @@ export default function LeaderboardPage() {
                                     {cat.label}
                                   </span>
                                   <span className="text-white text-sm font-bold tabular-nums">
-                                    {cat.value}/5
+                                    {cat.value}/{categoryMaxForSesh(entry.sesh)}
                                   </span>
                                 </div>
                               ))}

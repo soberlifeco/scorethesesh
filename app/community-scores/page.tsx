@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getSupabaseServerClient } from "@/lib/supabase";
-import { categoryLabels, maxScoreForSesh, totalOfScores } from "@/lib/sesh-data";
+import { categoryLabels, maxScoreForSesh, categoryMaxForSesh, totalOfScores } from "@/lib/sesh-data";
 import { displayUsername } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
@@ -157,7 +157,7 @@ export default async function CommunityScoresPage() {
                         {label}
                       </span>
                       <span className="text-white text-sm font-bold tabular-nums">
-                        {(row[key] as number | null) ?? 0}/5
+                        {(row[key] as number | null) ?? 0}/{categoryMaxForSesh(row.sesh)}
                       </span>
                     </div>
                   ))}

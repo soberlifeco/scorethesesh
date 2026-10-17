@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseServerClient, getVerifiedUser } from "@/lib/supabase";
-import { isOldEra, totalOfScores, MAX_SESH } from "@/lib/sesh-data";
+import { isOldEra, totalOfScores, categoryMaxForSesh, MAX_SESH } from "@/lib/sesh-data";
 import { isRateLimited, clientIp } from "@/lib/rate-limit";
 
 type ScoreRow = {
@@ -102,12 +102,13 @@ export async function POST(req: NextRequest) {
   }
 
   const oldEra = isOldEra(sesh);
+  const catMax = categoryMaxForSesh(sesh);
   const catFields = ["music", "substances", "cat3", "cat5"] as const;
   const scores: Record<string, number> = {};
   for (const key of catFields) {
     const value = Number(body?.[key]);
-    if (!Number.isInteger(value) || value < -5 || value > 5) {
-      return NextResponse.json({ error: `${key} must be a whole number -5–5.` }, { status: 400 });
+    if (!Number.isInteger(value) || value < -catMax || value > catMax) {
+      return NextResponse.json({ error: `${key} must be a whole number ${-catMax}–${catMax}.` }, { status: 400 });
     }
     scores[key] = value;
   }
@@ -115,8 +116,8 @@ export async function POST(req: NextRequest) {
   let hangover: number | null = null;
   if (!oldEra) {
     const value = Number(body?.hangover);
-    if (!Number.isInteger(value) || value < -5 || value > 5) {
-      return NextResponse.json({ error: "hangover must be a whole number -5–5." }, { status: 400 });
+    if (!Number.isInteger(value) || value < -catMax || value > catMax) {
+      return NextResponse.json({ error: `hangover must be a whole number ${-catMax}–${catMax}.` }, { status: 400 });
     }
     hangover = value;
   }

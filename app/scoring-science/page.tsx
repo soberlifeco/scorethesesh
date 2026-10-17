@@ -60,10 +60,14 @@ export default function ScoringSciencePage() {
         </h1>
 
         <div className="flex flex-col gap-3 text-white/70 text-sm sm:text-base leading-relaxed">
-          <p>Each category normally runs 0 to 5 — but can go as low as -5 for the seshes that earn it.</p>
           <p>
-            There are 5 categories in total, meaning the max score that can be
-            awarded is <span className="text-[#39FF14] font-bold">25/25</span>.
+            From Episode 76, each category runs from -10 to 10, so the max
+            score that can be awarded is{" "}
+            <span className="text-[#39FF14] font-bold">50/50</span>.
+          </p>
+          <p>
+            Before that, each category normally ran 0 to 5 — but could go as
+            low as -5 for the seshes that earned it — so the max was 25/25.
             Don&apos;t worry — I try to keep it simple (because I am stupid).
           </p>
         </div>

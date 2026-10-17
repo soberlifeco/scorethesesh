@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import type { Session } from "@supabase/supabase-js";
 import { getSupabaseBrowserClient } from "@/lib/supabase-browser";
-import { ORDERED_CHUNKS, CHUNK_SIZE, MAX_SESH, categoryLabels, isOldEra, maxScoreForSesh, type Sesh } from "@/lib/sesh-data";
+import { ORDERED_CHUNKS, CHUNK_SIZE, MAX_SESH, categoryLabels, isOldEra, maxScoreForSesh, categoryMaxForSesh, type Sesh } from "@/lib/sesh-data";
 import { displayUsername } from "@/lib/format";
 
 type Account = { userId: string; email: string; username: string; accessToken: string };
@@ -278,6 +278,8 @@ function ScoreCard({ entry, isOpen, onToggle, account }: { entry: Sesh; isOpen: 
   const oldEra = isOldEra(entry.sesh);
   const labels = categoryLabels(entry.sesh);
   const maxScore = maxScoreForSesh(entry.sesh);
+  const catMax = categoryMaxForSesh(entry.sesh);
+  const catOptions = Array.from({ length: catMax * 2 + 1 }, (_, i) => i - catMax);
 
   useEffect(() => {
     if (!isOpen || community || loadingCommunity) return;
@@ -387,7 +389,7 @@ function ScoreCard({ entry, isOpen, onToggle, account }: { entry: Sesh; isOpen: 
                   <select
                     value={draft[key] === 0 ? 0 : draft[key] || ""}
                     onChange={(e) => {
-                      const v = Math.max(-5, Math.min(5, Number(e.target.value)));
+                      const v = Math.max(-catMax, Math.min(catMax, Number(e.target.value)));
                       setDraft((d) => ({ ...d, [key]: v }));
                     }}
                     className="bg-black/30 border border-white/10 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-[#39FF14]/70 transition-colors duration-200 appearance-none"
@@ -395,7 +397,7 @@ function ScoreCard({ entry, isOpen, onToggle, account }: { entry: Sesh; isOpen: 
                     <option value="" disabled>
                       –
                     </option>
-                    {[-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5].map((n) => (
+                    {catOptions.map((n) => (
                       <option key={n} value={n}>
                         {n}
                       </option>

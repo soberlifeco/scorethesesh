@@ -93,7 +93,15 @@ export const SESH_DATA: Sesh[] = [
 /** Highest sesh number logged so far; derived so new seshes never need a code change elsewhere. */
 export const MAX_SESH = Math.max(...SESH_DATA.map((s) => s.sesh));
 
-export const RANKED = [...SESH_DATA].sort((a, b) => b.total - a.total || a.sesh - b.sesh);
+/** Score as a percentage of that sesh's max, so seshes from different eras (/20, /25, /50) compare fairly. */
+export function scorePercent(entry: Pick<Sesh, "total" | "maxScore">): number {
+  return Math.round((entry.total / entry.maxScore) * 1000) / 10;
+}
+
+/** Ranked by percentage of max score (cross-multiplied to avoid float ties); ties go to the earlier sesh. */
+export const RANKED = [...SESH_DATA].sort(
+  (a, b) => b.total * a.maxScore - a.total * b.maxScore || a.sesh - b.sesh
+);
 
 export const CHUNK_SIZE = 10;
 export const CHUNKS: Sesh[][] = [];
@@ -154,7 +162,20 @@ export function categoryBreakdown(entry: Sesh): { label: string; value: number }
   }));
 }
 
+/** From this sesh onwards every category is scored -10 to 10 (five categories, out of 50). */
+export const TEN_ERA_START = 76;
+
+export function isTenEra(sesh: number): boolean {
+  return sesh >= TEN_ERA_START;
+}
+
+/** Highest (and, negated, lowest) score a single category can take for a given sesh. */
+export function categoryMaxForSesh(sesh: number): number {
+  return isTenEra(sesh) ? 10 : 5;
+}
+
 export function maxScoreForSesh(sesh: number): number {
+  if (isTenEra(sesh)) return 50;
   return isOldEra(sesh) ? 20 : 25;
 }
 
