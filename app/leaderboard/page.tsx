@@ -9,7 +9,8 @@ import { CHUNKS, CHUNK_SIZE, categoryBreakdown, categoryMaxForSesh, scorePercent
 const RANGE_EMOJI = ["👑", "🐟", "🤠", "❌", "☠️"];
 const GRAVEYARD_EMOJI = "🪦";
 const GRAVEYARD_START_RANK = 51;
-const ABYSS_EMOJI = "🕳️";
+// Ranks 61 and worse: one emoji per 10-sesh band (61–70, 71–80, ...), cycling if we run out.
+const ABYSS_EMOJIS = ["🕳️", "🧟", "🗑️", "👽", "🌋", "🫠", "🚽"];
 const ABYSS_START_RANK = 61;
 
 export default function LeaderboardPage() {
@@ -75,7 +76,10 @@ export default function LeaderboardPage() {
           const isChunkOpen = openChunk === chunkIndex;
           const chunkEmoji =
             rangeStart >= ABYSS_START_RANK
-              ? ABYSS_EMOJI
+              ? ABYSS_EMOJIS[
+                  Math.floor((rangeStart - ABYSS_START_RANK) / CHUNK_SIZE) %
+                    ABYSS_EMOJIS.length
+                ]
               : rangeStart >= GRAVEYARD_START_RANK
               ? GRAVEYARD_EMOJI
               : RANGE_EMOJI[chunkIndex] ?? "";
