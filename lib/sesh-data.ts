@@ -115,6 +115,7 @@ export const SESH_DATA: Sesh[] = [
   { sesh: 103, music: 10, substances: -5, cat3: 8, hangover: 10, cat5: 3, total: 26, maxScore: 50, instagram: "https://www.instagram.com/soberlifetom/reel/DfpsoHQNX9x/" },
   { sesh: 104, music: 8, substances: 10, cat3: 8, hangover: 10, cat5: 8, total: 44, maxScore: 50, instagram: "https://www.instagram.com/soberlifetom/reel/DfsTX7fNllx/" },
   { sesh: 105, music: 7, substances: 10, cat3: 7, hangover: 3, cat5: 3, total: 30, maxScore: 50, instagram: "https://www.instagram.com/soberlifetom/reel/Dfux4DRNMHc/" },
+  { sesh: 106, music: 9, substances: 3, cat3: 6, hangover: 2, cat5: 0, total: 20, maxScore: 50, instagram: "https://www.instagram.com/soberlifetom/reel/Dfxfx4StIQ7/" },
 ];
 
 /** Highest sesh number logged so far; derived so new seshes never need a code change elsewhere. */
