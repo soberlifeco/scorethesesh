@@ -3,15 +3,13 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const LINKS = [
+const LINKS: { label: string; href: string; external?: boolean }[] = [
   { label: "Score The Sesh", href: "/" },
   { label: "Scoring Science", href: "/scoring-science" },
   { label: "Sesh Leaderboard", href: "/leaderboard" },
   { label: "Your Turn To Score", href: "/your-turn-to-score" },
   { label: "Community Scores", href: "/community-scores" },
   { label: "Useful Links & Support", href: "/useful-links" },
-  { label: "All Seshed Out", href: "/all-seshed-out" },
-  { label: "Support Score The Sesh", href: "https://donate.stripe.com/00wfZ9bCP9QrcSb0YM7EQ06", external: true },
 ];
 
 export default function NavBar() {

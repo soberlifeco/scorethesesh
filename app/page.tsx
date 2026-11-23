@@ -37,13 +37,12 @@ export default function HomePage() {
           </p>
         </div>
 
-        {/* All Seshed Out CTA */}
+        {/* Help link */}
         <Link
-          href="/all-seshed-out"
-          style={{ fontFamily: "var(--font-space-grotesk)" }}
-          className="mt-2 w-full bg-[#39FF14] text-black font-black uppercase tracking-wide px-6 py-5 sm:py-6 rounded-2xl text-lg sm:text-2xl text-center leading-tight hover:brightness-110 transition-all duration-200"
+          href="/useful-links"
+          className="mt-2 text-white/50 hover:text-white text-sm underline underline-offset-4 transition-colors duration-200"
         >
-          Click here to register interest for All Seshed Out
+          Need help? Useful links &amp; support
         </Link>
       </div>
 
